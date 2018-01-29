@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+// 引入图标库
+import './assets/icons/iconfont'
 
 Vue.config.productionTip = false
 

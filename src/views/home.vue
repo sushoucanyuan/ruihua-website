@@ -1,6 +1,5 @@
 <template>
   <div id="home">
-
   </div>
 </template>
 
@@ -13,6 +12,6 @@
 <style>
   #home{
     height: 400px;
-    background-color: var(--color-white-low);
+    background-color: var(--color-yellow-high);
   }
 </style>
