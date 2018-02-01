@@ -1,0 +1,12 @@
+:root {
+  /* Colors
+  -------------------------- */
+  --color-white: #fff; 
+  --color-yellow: #c59b54;
+  --color-orange: #f08513;
+  /* Font
+  -------------------------- */
+  --font-color-light-1: #000;
+  --font-color-light-2: #3e3a39;
+  --font-color-light-3: #707070;
+}
