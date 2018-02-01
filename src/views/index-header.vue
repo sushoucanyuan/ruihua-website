@@ -24,7 +24,7 @@
 </script>
 
 <style scoped lang="postcss">
-  @import "../assets/var.css";
+  @import "../assets/css/var.css";
 
   header {
     background-color: #1d1c1b;

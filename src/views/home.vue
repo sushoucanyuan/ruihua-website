@@ -1,15 +1,19 @@
 <template>
   <div>
-
+    <m-icon name="location"></m-icon>
   </div>
 </template>
 
 <script>
-  export default {
+  import mIcon from '@/components/m-icon.vue'
 
+  export default {
+    components:{
+      mIcon
+    }
   }
 </script>
 
 <style lang="postcss">
-  @import "../assets/var.css";
+  @import "../assets/css/var.css";
 </style>
