@@ -36,7 +36,7 @@
       height: 120px;
       width: 100%;
       max-width: 1500px;
-      padding: 0 40px 4px;
+      padding: 0 var(--index-padding) 4px;
       margin: 0 auto;
       & > .logo {
         margin-right: 40px;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="index">
     <index-header></index-header>
     <main>
       <keep-alive>
@@ -20,5 +20,9 @@
 </script>
 
 <style scoped lang="postcss">
+  @import "../assets/css/var.css";
 
+  .index {
+    min-width: calc(var(--index-width) + 2 * var(--index-padding));
+  }
 </style>

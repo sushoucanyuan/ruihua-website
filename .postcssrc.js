@@ -6,6 +6,7 @@ module.exports = {
     "postcss-url": {},
     "autoprefixer": {},
     "postcss-nesting": {},
-    "postcss-css-variables": {}
+    "postcss-css-variables": {},
+    "postcss-color-function": {}    
   }
 }
