@@ -8,6 +8,7 @@
 
 <script>
   export default {
+    name: 'm-button',
     props: {
       type: {
         type: String,

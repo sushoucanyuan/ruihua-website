@@ -34,7 +34,7 @@
           <m-title :level="1" en="estate" cn="海外房产" tips="专注海外精品房产投资，国际顶尖房产投资管理团队"></m-title>
           <m-button type="plain" size="small">更多</m-button>
         </div>
-        <m-tabs class="tabs" v-model="estate.tabId">
+        <m-tabs class="tabs" type="button" v-model="estate.tabId">
           <m-tab-item :id="1">悉尼</m-tab-item>
           <m-tab-item :id="2">墨尔本</m-tab-item>
         </m-tabs>
@@ -49,7 +49,7 @@
           <m-title :level="1" en="toutism" cn="旅游&amp;游学" tips="定制旅游，留学自住一站式VIP服务"></m-title>
           <m-button type="plain" size="small">更多</m-button>
         </div>
-        <m-tabs class="tabs" v-model="toutism.tabId">
+        <m-tabs class="tabs" type="button" v-model="toutism.tabId">
           <m-tab-item :id="1">旅游</m-tab-item>
           <m-tab-item :id="2">游学</m-tab-item>
         </m-tabs>
@@ -270,7 +270,7 @@
     & > section:not(.about) {
       & > .container {
         display: grid;
-        grid-gap: 40px 60px;
+        grid-gap: var(--grid-gap);
         grid-template-columns: [start] repeat(3, 1fr) [end];
         width: var(--index-width);
         margin: 0 auto;
