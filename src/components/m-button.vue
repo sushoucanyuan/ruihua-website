@@ -1,5 +1,5 @@
 <template>
-  <button class="m-button" :class="['pattern-' + pattern, 'size-' + size]" @click="handleClick">
+  <button class="m-button" :class="['type-' + type, 'size-' + size]" @click="handleClick">
     <span v-if="$slots.default" @click="handleInnerClick">
       <slot></slot>
     </span>
@@ -9,7 +9,7 @@
 <script>
   export default {
     props: {
-      pattern: {
+      type: {
         type: String,
         default: 'default'
       },
@@ -43,8 +43,8 @@
     &:focus {
       outline: none;
     }
-    /* pattern */
-    &.pattern-default {
+    /* type */
+    &.type-default {
       color: var(--color-white);
       border: none;
       background-color: var(--color-yellow);
@@ -52,7 +52,7 @@
         cursor: pointer;
       }
     }
-    &.pattern-plain {
+    &.type-plain {
       color: var(--color-yellow);
       background-color: color(var(--color-white) a(60%));
       border: 1px solid var(--color-yellow);
@@ -62,7 +62,7 @@
         background-color: var(--color-yellow);        
       }
     }
-    &.pattern-text {
+    &.type-text {
       color: rgb(0, 0, 0);
       background-color: transparent;
       > span:hover {

@@ -4,9 +4,11 @@ module.exports = {
   "plugins": {
     "postcss-import": {},
     "postcss-url": {},
-    "autoprefixer": {},
     "postcss-nesting": {},
     "postcss-css-variables": {},
-    "postcss-color-function": {}    
+    "postcss-color-function": {},
+    "postcss-selector-matches": {},
+    "postcss-selector-not": {},    
+    "autoprefixer": {}
   }
 }

@@ -9,12 +9,12 @@
   --font-color-light-1: #000;
   --font-color-light-2: #3e3a39;
   --font-color-light-3: #707070;
-  --font-family-base: Microsoft YaHei, SimSun, sans-serif;  
+  --font-color-light-4: #898989;
+  --font-family-base: Microsoft YaHei, SimSun, sans-serif;
   --font-family-normal: "fzlth";
   --font-family-thin: "fzltcxh";
   /* layout
   -------------------------- */
   --index-width: 1200px;
   --index-padding: 40px;
-  --grid-gap: 65px;
 }
