@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import index from '@/views/index'
 import home from '@/views/home'
+import overseas from '@/views/overseas'
 
 Vue.use(Router)
 
@@ -16,7 +17,7 @@ export default new Router({
     }, {
       path: '/overseas-property',
       name: 'overseas-property',
-      component: home
+      component: overseas
     }, {
       path: '/tour-study',
       name: 'tour-study',
