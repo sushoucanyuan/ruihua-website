@@ -11,11 +11,17 @@
 </script>
 
 <style>
-  body {
+  * {
     margin: 0;
+    padding: 0;
+  }
+
+  ul {
+    list-style: none;
   }
 
   #app {
-    font-family: "微软雅黑", "宋体", Arial, sans-serif;
+    font-family: "Open Sans", "Helvetica Neue", Arial, "Hiragino Sans GB",
+      "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   }
 </style>

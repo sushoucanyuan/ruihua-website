@@ -1,7 +1,7 @@
 <template>
   <div class="index">
+    <side-tool></side-tool>
     <index-header></index-header>
-          <side-tool></side-tool>
     <main>
       <keep-alive>
         <router-view/>
@@ -11,12 +11,13 @@
 </template>
 
 <script>
-  import indexHeader from '@/views/index-header.vue'
   import sideTool from '@/views/side-tool.vue'
+  import indexHeader from '@/views/index-header.vue'
 
   export default {
     components: {
-      indexHeader,sideTool
+      sideTool,
+      indexHeader
     }
   }
 </script>

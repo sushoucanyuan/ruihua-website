@@ -4,13 +4,13 @@
   --color-white: #fff;
   --color-yellow: #c59b54;
   --color-orange: #f08513;
+  --color-background: #1d1c1b;
   /* Font
   -------------------------- */
   --font-color-light-1: #000;
   --font-color-light-2: #3e3a39;
   --font-color-light-3: #707070;
   --font-color-light-4: #898989;
-  --font-family-base: Microsoft YaHei, SimSun, sans-serif;
   --font-family-normal: "fzlth";
   --font-family-thin: "fzltcxh";
   /* layout

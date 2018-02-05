@@ -71,10 +71,10 @@
         & > .tips {
           color: var(--font-color-light-3);
           font-size: 14px;
-          font-family: 苹果黑体;
           position: relative;
-          margin-left: 20px;
+          margin-left: 12px;
           padding-left: 20px;
+          transform: scaleX(0.94);
           &::before {
             content: "";
             position: absolute;
@@ -82,7 +82,7 @@
             top: 0;
             bottom: 0;
             width: 1px;
-            height: 60%;
+            height: 75%;
             margin: auto 0;
             background-color: var(--font-color-light-3);
           }

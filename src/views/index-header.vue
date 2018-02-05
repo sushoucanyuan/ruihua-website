@@ -27,7 +27,7 @@
   @import "../assets/css/var.css";
 
   header {
-    background-color: #1d1c1b;
+    background-color: var(--color-background);
     & > .container {
       display: flex;
       align-items: center;
