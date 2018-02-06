@@ -1,19 +1,19 @@
 <template>
   <div class="m-title" :class="`level-${level}`">
     <template v-if="level === 1">
-      <span class="en">{{en.toUpperCase()}}</span>
-      <span class="cn">
-        <span class="title">{{cn}}</span>
-        <span class="tips">{{tips}}</span>
+      <span class="m-title-en">{{en.toUpperCase()}}</span>
+      <span class="m-title-cn">
+        <span class="m-title-title">{{cn}}</span>
+        <span class="m-title-tips">{{tips}}</span>
       </span>
     </template>
     <template v-else-if="level === 2">
-      <span class="cn">{{cn}}</span>
-      <span v-if="en" class="en">{{en.toUpperCase()}}</span>
-      <span v-else-if="tips" class="tips">{{tips}}</span>
+      <span class="m-title-cn">{{cn}}</span>
+      <span v-if="en" class="m-title-en">{{en.toUpperCase()}}</span>
+      <span v-else-if="tips" class="m-title-tips">{{tips}}</span>
     </template>
     <template v-else-if="level === 3">
-      <span class="cn">{{cn}}</span>
+      <span>{{cn}}</span>
     </template>
   </div>
 </template>
@@ -44,12 +44,12 @@
       display: flex;
       align-items: flex-start;
       margin: -8px 0;
-      & > .en {
+      & > .m-title-en {
         color: var(--color-yellow);
         font-size: 60px;
         font-family: var(--font-family-en);
       }
-      & > .cn {
+      & > .m-title-cn {
         display: flex;
         align-items: center;
         position: relative;
@@ -63,12 +63,12 @@
           height: 2px;
           background-color: var(--color-yellow);
         }
-        & > .title {
+        & > .m-title-title {
           color: var(--font-color-light-2);
           font-size: 23px;
           box-sizing: border-box;
         }
-        & > .tips {
+        & > .m-title-tips {
           color: var(--font-color-light-3);
           font-size: 14px;
           position: relative;
@@ -93,13 +93,13 @@
       display: flex;
       align-items: center;
       letter-spacing: 1px;
-      & > .cn {
+      & > .m-title-cn {
         color: var(--color-yellow);
         font-size: 24px;
         font-weight: bold;
         padding-left: 8px;
       }
-      & > .en {
+      & > .m-title-en {
         color: var(--font-color-light-4);
         font-size: 24px;
         font-family: var(--font-family-en);

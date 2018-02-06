@@ -38,8 +38,29 @@
   export default {
     data() {
       return {
-        tabId: 0,
+        tabId: this.$route.query.tabId,
         sites: ['全部', '悉尼', '墨尔本', '布里斯班', '黄金海岸', '阿德莱德', '珀斯', '达尔文', '其它地区']
+      }
+    },
+    watch: {
+      tabId: function (val, oldVal) {
+        this.replace(val)
+      },
+      '$route.query.tabId': function (val, oldVal) {
+        if (val != undefined) {
+          this.tabId = val
+        }
+        else {
+          this.replace(oldVal)
+        }
+      }
+    },
+    methods: {
+      replace(tabId) {
+        let name = this.$route.name
+        if (name == 'overseas-property') {
+          this.$router.replace({ name, query: { tabId } })
+        }
       }
     },
     components: {
@@ -47,6 +68,16 @@
       mCard,
       mTabs,
       mTabItem
+    },
+    beforeRouteEnter(to, from, next) {
+      if (to.query.tabId == undefined) {
+        next(vm => {
+          vm.replace(vm.tabId || 0)
+        })
+      }
+      else {
+        next()
+      }
     }
   }
 </script>
@@ -109,7 +140,7 @@
         & > .recommend-card {
           grid-area: recom-card;
           align-items: start;
-          & > .info-list{
+          & > .info-list {
             height: 800px;
           }
         }

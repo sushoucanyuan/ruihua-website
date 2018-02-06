@@ -3,35 +3,44 @@ import Router from 'vue-router'
 import index from '@/views/index'
 import home from '@/views/home'
 import overseas from '@/views/overseas'
+import overseasHouse from '@/views/overseas-house'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [{
     path: '/',
+    redirect: {
+      name: 'home'
+    },
     component: index,
     children: [{
-      path: '/home',
+      path: 'home',
       name: 'home',
       component: home
     }, {
-      path: '/overseas-property',
+      path: 'overseas-property',
       name: 'overseas-property',
       component: overseas
     }, {
-      path: '/tour-study',
+      path: 'overseas-house/:id',
+      name: 'overseas-house',
+      props: true,
+      component: overseasHouse
+    }, {
+      path: 'tour-study',
       name: 'tour-study',
       component: home
     }, {
-      path: '/trust-fund',
+      path: 'trust-fund',
       name: 'trust-fund',
       component: home
     }, {
-      path: '/about-ruihua',
+      path: 'about-ruihua',
       name: 'about-ruihua',
       component: home
     }, {
-      path: '/info-table',
+      path: 'info-table',
       name: 'info-table',
       component: home
     }]

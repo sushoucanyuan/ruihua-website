@@ -6,10 +6,9 @@
         <nav class="links">
           <router-link class="link" :to="{name: 'home'}">首页</router-link>
           <router-link class="link" :to="{name: 'overseas-property'}">海外房产</router-link>
-          <router-link class="link" :to="{name: 'tour-study'}">旅游游学</router-link>
-          <router-link class="link" :to="{name: 'trust-fund'}">信托基金</router-link>
+          <router-link class="link" :to="{name: 'tour-study'}" exact>旅游游学</router-link>
+          <router-link class="link" :to="{name: 'trust-fund'}" exact>信托基金</router-link>
           <router-link class="link" :to="{name: 'about-ruihua'}">关于瑞华</router-link>
-          <router-link class="link" :to="{name: 'info-table'}">信息表格</router-link>
         </nav>
         <img class="phoneNumber" src="/static/phone-number.png" alt="733-423-297">
       </div>
@@ -39,7 +38,7 @@
       padding: 0 var(--index-padding) 4px;
       margin: 0 auto;
       & > .logo {
-        margin-right: 40px;
+        margin-right: 60px;
       }
       & > .info {
         display: flex;
@@ -48,7 +47,7 @@
         & > .links {
           display: flex;
           justify-content: space-between;
-          width: 765px;
+          width: 660px;
           & .link {
             color: var(--color-white);
             font-size: 16px;
@@ -59,7 +58,7 @@
           }
         }
         & > .phoneNumber {
-          margin-left: 55px;
+          margin-left: 70px;
         }
       }
     }

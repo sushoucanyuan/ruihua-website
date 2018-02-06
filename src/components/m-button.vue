@@ -57,10 +57,10 @@
       color: var(--color-yellow);
       background-color: color(var(--color-white) a(60%));
       border: 1px solid var(--color-yellow);
-      &:hover{
+      &:hover {
         cursor: pointer;
         color: var(--color-white);
-        background-color: var(--color-yellow);        
+        background-color: var(--color-yellow);
       }
     }
     &.type-text {
@@ -74,7 +74,7 @@
     /* size */
     &.size-small {
       font-size: 16px;
-      letter-spacing: 1px;      
+      letter-spacing: 1px;
       width: 95px;
       height: 37px;
       border-radius: 4px;
@@ -84,7 +84,7 @@
       letter-spacing: 1px;
       width: 210px;
       height: 50px;
-      border-radius: 5px;      
+      border-radius: 5px;
     }
     &.size-large {
       font-size: 14px;
