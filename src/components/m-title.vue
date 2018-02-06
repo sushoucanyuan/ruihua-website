@@ -1,18 +1,18 @@
 <template>
-  <div class="m-title" :class="`level-${level}`">
-    <template v-if="level === 1">
+  <div class="m-title" :class="[`level-${level}`, { line }]">
+    <template v-if="level == 1">
       <span class="m-title-en">{{en.toUpperCase()}}</span>
       <span class="m-title-cn">
         <span class="m-title-title">{{cn}}</span>
         <span class="m-title-tips">{{tips}}</span>
       </span>
     </template>
-    <template v-else-if="level === 2">
+    <template v-else-if="level == 2">
       <span class="m-title-cn">{{cn}}</span>
       <span v-if="en" class="m-title-en">{{en.toUpperCase()}}</span>
       <span v-else-if="tips" class="m-title-tips">{{tips}}</span>
     </template>
-    <template v-else-if="level === 3">
+    <template v-else-if="level == 3">
       <span>{{cn}}</span>
     </template>
   </div>
@@ -22,12 +22,15 @@
   export default {
     props: {
       level: {
-        type: Number,
+        type: [Number, String],
         default: 1
       },
       en: String,
       cn: String,
-      tips: String
+      tips: String,
+      line: {
+        type: Boolean
+      }
     }
   }
 </script>
@@ -97,7 +100,7 @@
         color: var(--color-yellow);
         font-size: 24px;
         font-weight: bold;
-        padding-left: 8px;
+        padding-left: 4px;
       }
       & > .m-title-en {
         color: var(--font-color-light-4);
@@ -113,10 +116,14 @@
           top: 0;
           bottom: 0;
           width: 1px;
-          height: 60%;
+          height: 58%;
           margin: auto 0;
           background-color: var(--font-color-light-4);
         }
+      }
+      &.line {
+        padding: 20px 0;
+        border-bottom: 1px solid var(--color-border);
       }
     }
     &.level-3 {

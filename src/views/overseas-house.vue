@@ -15,15 +15,21 @@
         <div></div>
       </m-card>
       <m-card class="steps" direction="row">
-        <div class="header" slot="header">
-          <div>5</div>
-          <div>
-            <div>步购房</div>
-            <div>安全快捷</div>
+        <img class="header" slot="header" src="/static/estate/steps.png">
+        <div class="body">
+          <div v-for="(item, index) in steps" :key="index">
+            <div>
+              <span class="step">Step</span>{{index + 1}}
+            </div>
+            <div>{{item}}</div>
           </div>
         </div>
-        <div>ss</div>
       </m-card>
+      <m-title class="title" level="2" en="project introduction" cn="项目介绍" line></m-title>
+      <m-title class="title" level="2" en="surrounding facilities" cn="周边设施" line></m-title>
+      <m-title class="title" level="2" en="property support" cn="物业配套" line></m-title>
+      <m-title class="title" level="2" en="huxing show" cn="户型展示" line></m-title>     
+      <m-title class="title" level="2" en="recommend" cn="瑞华推荐" line></m-title>             
     </div>
   </div>
 </template>
@@ -36,6 +42,11 @@
 
   export default {
     props: ['id'],
+    data() {
+      return {
+        steps: ['预定房源', '约见律师', '签约合同', '贷款预批', '房屋交割']
+      }
+    },
     components: {
       mCard,
       mTitle,
@@ -45,11 +56,12 @@
   }
 </script>
 
-<style lang="postcss">
+<style scoped lang="postcss">
   @import "../assets/css/var.css";
 
   .overseas-house {
     background-image: url("/static/background-top.png");
+    background-repeat: no-repeat;
     & > .container {
       width: var(--index-width);
       margin: 0 auto;
@@ -71,23 +83,58 @@
         }
       }
       & > .steps {
+        margin-top: 40px;
         & .header {
+          display: block;
+        }
+        & .body {
           display: flex;
           align-items: center;
           justify-content: center;
-          & > div:first-child {
-            color: var(--color-white);
-          }
-          & > div:last-child {
-            &:first-child {
-              color: var(--color-white);
+          height: 100%;
+          & > div {
+            --color: color(var(--color-yellow) a(0.6));
+            --margin: 23px;
+            --size: 20px;
+            color: var(--color-yellow);
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.5;
+            text-align: center;
+            letter-spacing: 1px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 112px;
+            height: 70px;
+            margin: 0 var(--margin);
+            border: 1px solid var(--color);
+            &:not(:last-child)::after {
+              color: var(--color);
+              font-size: var(--size);
+              content: ">";
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              right: calc(0px - var(--margin) - var(--size) / 2);
+              height: var(--size);
+              line-height: var(--size);
+              margin: auto 0;
             }
-            &:last-child {
-              color: var(--color-yellow);
-              background-color: var(--color-white);
+            & > :first-child {
+              font-size: 20px;
+            }
+            & .step {
+              font-weight: normal;
+              margin-right: 5px;
             }
           }
         }
+      }
+      & > .title{
+        margin-top: 40px;
+
       }
     }
   }
