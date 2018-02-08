@@ -40,7 +40,7 @@
     font-family: var(--font-family-base);
     font-weight: bold;
     box-sizing: border-box;
-    transition: .1s;
+    transition: 0.1s;
     &:focus {
       outline: none;
     }
@@ -57,7 +57,7 @@
       color: var(--color-yellow);
       background-color: color(var(--color-white) a(60%));
       border: 1px solid var(--color-yellow);
-      &:hover {
+      &:matches(.is-active, :hover) {
         cursor: pointer;
         color: var(--color-white);
         background-color: var(--color-yellow);
@@ -71,7 +71,24 @@
         color: var(--color-yellow);
       }
     }
+    &.type-sort {
+      color: color(var(--font-color-light-4) a(60%));
+      background-color: var(--color-white);
+      border: 1px solid color(var(--font-color-light-4) a(60%));
+      &:hover {
+        cursor: pointer;
+        color: var(--color-yellow);
+        border: 1px solid var(--color-yellow);
+      }
+    }
     /* size */
+    &.size-mini {
+      font-size: 14px;
+      letter-spacing: 1px;
+      width: 62px;
+      height: 26px;
+      border-radius: 4px;
+    }
     &.size-small {
       font-size: 16px;
       letter-spacing: 1px;

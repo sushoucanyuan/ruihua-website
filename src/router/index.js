@@ -5,6 +5,9 @@ import home from '@/views/home'
 import overseas from '@/views/overseas'
 import overseasHouse from '@/views/overseas-house'
 import overseasInfo from '@/views/overseas-info'
+import tourStudy from '@/views/tour-study'
+
+
 
 Vue.use(Router)
 
@@ -36,7 +39,7 @@ export default new Router({
     }, {
       path: 'tour-study',
       name: 'tour-study',
-      component: home
+      component: tourStudy
     }, {
       path: 'trust-fund',
       name: 'trust-fund',

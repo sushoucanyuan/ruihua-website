@@ -65,5 +65,33 @@
         }
       }
     }
+    &.type-banding {
+      display: flex;
+      justify-content: space-around;
+      background-color: var(--color-yellow);
+      & > .m-tab-item {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        letter-spacing: 1px;
+        width: 1301px;
+        padding: 12px 0;
+        border-radius: 5px;
+        &.is-active {
+          color: var(--color-white);
+          background-color: #ad7d34;
+          &:hover {
+            cursor: default;
+          }
+        }
+        &:not(.is-active) {
+          color: var(--font-color-light-2);
+          &:hover {
+            cursor: pointer;
+            color: var(--color-white);
+          }
+        }
+      }
+    }
   }
 </style>
