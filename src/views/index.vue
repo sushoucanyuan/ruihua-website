@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <!-- <side-tool></side-tool> -->
+    <side-tool></side-tool>
     <index-header></index-header>
     <main>
       <keep-alive>

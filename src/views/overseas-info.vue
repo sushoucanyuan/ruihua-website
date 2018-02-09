@@ -10,7 +10,10 @@
       </m-breadcrumb>
       <div class="info">
         <div class="page"></div>
-        <div class="recommand"></div>
+        <div class="recommand">
+          <m-title class="title" level="2" en="recommend" cn="瑞华推荐"></m-title>
+          <m-recommend v-for="item in recommend" :key="item.planid" :item="item"></m-recommend>
+        </div>
       </div>
       <m-title level="2" en="information" cn="瑞华房产资讯" line></m-title>
     </div>
@@ -18,17 +21,30 @@
 </template>
 
 <script>
+  import api from '@/api'
   import mCard from '@/components/m-card.vue'
   import mTitle from '@/components/m-title.vue'
   import mBreadcrumb from '@/components/m-breadcrumb.vue'
   import mBreadcrumbItem from '@/components/m-breadcrumb-item.vue'
+  import mRecommend from '@/components/m-recommend.vue'
 
   export default {
+    data() {
+      return {
+        recommend: []
+      }
+    },
     components: {
       mCard,
       mTitle,
       mBreadcrumb,
-      mBreadcrumbItem
+      mBreadcrumbItem,
+      mRecommend
+    },
+    beforeMount() {
+      api.getHotHouses({ num: 4 }).then(recommend => {
+        this.recommend = recommend
+      })
     }
   }
 </script>
@@ -42,9 +58,9 @@
     & > .container {
       width: var(--index-width);
       margin: 0 auto;
-      padding: 80px 0 100px;
+      padding-top: var(--index-padding-top);
       & > .breadcrumb {
-        margin: 45px 0 60px;
+        margin-bottom: 50px;
       }
       & > .info {
         display: grid;
@@ -59,8 +75,9 @@
         }
         & > .recommand {
           grid-area: recommand;
-          height: 400px;
-          background-color: rgb(133, 133, 196);
+          display: grid;
+          grid-gap: var(--grid-gap);
+          grid-template-columns: 1fr;
         }
       }
     }

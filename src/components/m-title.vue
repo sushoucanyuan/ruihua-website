@@ -20,6 +20,7 @@
 
 <script>
   export default {
+    name: 'm-title',
     props: {
       level: {
         type: [Number, String],
@@ -46,7 +47,7 @@
     &.level-1 {
       display: flex;
       align-items: flex-start;
-      margin: -8px 0;
+      margin-bottom: 44px;
       & > .m-title-en {
         color: var(--color-yellow);
         font-size: 60px;
@@ -61,7 +62,7 @@
           content: "";
           position: absolute;
           left: 4px;
-          bottom: -18px;
+          bottom: -15px;
           width: 45px;
           height: 2px;
           background-color: var(--color-yellow);
@@ -87,7 +88,7 @@
             width: 1px;
             height: 75%;
             margin: auto 0;
-            background-color: var(--font-color-light-3);
+            background-color: currentcolor;
           }
         }
       }
@@ -118,7 +119,7 @@
           width: 1px;
           height: 58%;
           margin: auto 0;
-          background-color: var(--font-color-light-4);
+          background-color: currentcolor;
         }
       }
       &.line {

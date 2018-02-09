@@ -18,5 +18,12 @@
   -------------------------- */
   --index-width: 1200px;
   --index-padding: 40px;
+  --index-padding-top: 75px;
   --grid-gap: 40px 60px;
+  /* House
+  -------------------------- */
+  --house-padding: 24px 38px;
+  --house-img-height: 245px;
+  --house-img-transform: scale(1.25);
+  --house-img-transition: .6s .15s;
 }

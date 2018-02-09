@@ -4,7 +4,7 @@
       <div>
         <span class="line"></span>
         <div class="container">
-          <m-title :level="1" en="about" cn="公司简介"></m-title>
+          <m-title class="title" :level="1" en="about" cn="公司简介"></m-title>
           <div class="cn">瑞华集团成立于2014年，总部设立于澳大利亚昆士兰省。瑞华集团扎根于澳大利亚，为澳洲本地及中国大陆的华人服务，业务涉及房地产销售、地产开发、房产租赁与管理、贷款服务、基金管理、国际猎聘、以及投资移民等多个领域。</div>
           <div class="en">Rivo Group was founded in Queensland, Australia in 2014. Based in Australia, Rivo provides professional servises to Chinese clients in Australia and Mainland China.Services across a range of areas from property development, property sales, property letting and man-agement, finance services, fund management, international recruit-ment to investment immigration.</div>
           <m-button class="btn" type="plain">了解我们</m-button>
@@ -32,47 +32,62 @@
       <div class="container">
         <div class="title">
           <m-title :level="1" en="estate" cn="海外房产" tips="专注海外精品房产投资，国际顶尖房产投资管理团队"></m-title>
-          <m-button type="plain" size="small">更多</m-button>
+          <m-button class="btn" type="plain" size="small">更多</m-button>
         </div>
-        <m-tabs class="tabs" type="button" v-model="estate.tabId">
-          <m-tab-item :id="1">悉尼</m-tab-item>
-          <m-tab-item :id="2">墨尔本</m-tab-item>
-        </m-tabs>
-        <m-card class="card" v-for="item in estate.items" :key="item.id">
-          <img src="static/home/estate.png" />
-        </m-card>
+        <div class="grid">
+          <m-tabs class="tabs" type="button" v-model="estate.tabId">
+            <m-tab-item v-for="(item, index) in estate.citys" :key="item.id" :id="index">{{item.name}}</m-tab-item>
+          </m-tabs>
+          <m-card class="card" v-for="item in estate.houses" :key="item.id">
+            <img :src="item.picurl" slot="header" />
+            <div class="body">
+              <div class="title">{{item.title}}</div>
+              <div class="value">
+                总价：￥
+                <span class="num">{{item.rmb}}</span>
+                万起
+              </div>
+              <div class="type">类型：{{item.type}} / 套内面积：{{item.area}}</div>
+            </div>
+          </m-card>
+        </div>
       </div>
     </section>
     <section class="toutism">
       <div class="container">
         <div class="title">
           <m-title :level="1" en="toutism" cn="旅游&amp;游学" tips="定制旅游，留学自住一站式VIP服务"></m-title>
-          <m-button type="plain" size="small">更多</m-button>
+          <m-button class="btn" type="plain" size="small">更多</m-button>
         </div>
-        <m-tabs class="tabs" type="button" v-model="toutism.tabId">
-          <m-tab-item :id="1">旅游</m-tab-item>
-          <m-tab-item :id="2">游学</m-tab-item>
-        </m-tabs>
-        <m-card class="card" v-for="item in toutism.items" :key="item.id">
-          <img src="static/home/estate.png" />
-        </m-card>
+        <div class="grid">
+          <m-tabs class="tabs" type="button" v-model="toutism.tabId">
+            <m-tab-item :id="1">旅游</m-tab-item>
+            <m-tab-item :id="2">游学</m-tab-item>
+          </m-tabs>
+          <m-card class="card" v-for="item in toutism.items" :key="item.id">
+            <img src="static/home/estate.png" />
+          </m-card>
+        </div>
       </div>
     </section>
     <section class="trustFund">
       <div class="container">
         <div class="title">
           <m-title :level="1" en="trust fund" cn="信托基金" tips="移民安家，一站式尊贵VIP服务"></m-title>
-          <m-button type="plain" size="small">更多</m-button>
+          <m-button class="btn" type="plain" size="small">更多</m-button>
         </div>
-        <m-card class="card" v-for="item in trustFund.items" :key="item.id">
-          <img src="static/home/estate.png" />
-        </m-card>
+        <div class="grid">
+          <m-card class="card" v-for="item in trustFund.items" :key="item.id">
+            <img src="static/home/estate.png" />
+          </m-card>
+        </div>
       </div>
     </section>
   </div>
 </template>
 
 <script>
+  import api from '@/api'
   import mTitle from '@/components/m-title.vue'
   import mButton from '@/components/m-button.vue'
   import mCard from '@/components/m-card.vue'
@@ -83,51 +98,9 @@
     data() {
       return {
         estate: {
-          tabId: 1,
-          items: [
-            {
-              id: 1,
-              site: '曼哈顿 One Manhanttan Square',
-              value: 832,
-              type: '精品公寓',
-              area: [64.6, 154.9]
-            },
-            {
-              id: 2,
-              site: '曼哈顿 One Manhanttan Square',
-              value: 832,
-              type: '精品公寓',
-              area: [64.6, 154.9]
-            },
-            {
-              id: 3,
-              site: '曼哈顿 One Manhanttan Square',
-              value: 832,
-              type: '精品公寓',
-              area: [64.6, 154.9]
-            },
-            {
-              id: 4,
-              site: '曼哈顿 One Manhanttan Square',
-              value: 832,
-              type: '精品公寓',
-              area: [64.6, 154.9]
-            },
-            {
-              id: 5,
-              site: '曼哈顿 One Manhanttan Square',
-              value: 832,
-              type: '精品公寓',
-              area: [64.6, 154.9]
-            },
-            {
-              id: 6,
-              site: '曼哈顿 One Manhanttan Square',
-              value: 832,
-              type: '精品公寓',
-              area: [64.6, 154.9]
-            }
-          ]
+          tabId: 0,
+          citys: [],
+          houses: []
         },
         toutism: {
           tabId: 1,
@@ -159,12 +132,30 @@
         }
       }
     },
+    watch: {
+      'estate.tabId': function (val, oldVal) {
+        this.getHouses(this.estate.citys[val].placeid)
+      }
+    },
     components: {
       mTitle,
       mButton,
       mCard,
       mTabs,
       mTabItem
+    },
+    methods: {
+      getHouses(placeid) {
+        api.getHouses({ placeid, num: 6 }).then(houses => {
+          this.estate.houses = houses
+        })
+      }
+    },
+    beforeMount() {
+      api.getCitys().then(citys => {
+        this.estate.citys = citys
+        this.getHouses(citys[0].placeid)
+      })
     }
   }
 </script>
@@ -177,13 +168,13 @@
     & > .about {
       display: flex;
       & > div {
-        --padding-top: 135px;
+        --padding-top: 130px;
         --padding-gap: 110px;
         display: flex;
         position: relative;
         box-sizing: border-box;
         width: 50%;
-        padding: var(--padding-top) 0 100px;
+        padding: var(--padding-top) 0 110px;
         & > .line {
           --height: 2px;
           position: absolute;
@@ -203,11 +194,13 @@
           }
           & > .container {
             padding-right: var(--padding-gap);
+            & > .title {
+              margin-top: -10px;
+            }
             & > .cn {
               font-size: 14px;
               line-height: 25px;
               letter-spacing: 0.5px;
-              margin-top: 60px;
             }
             & > .en {
               font-size: 14px;
@@ -269,29 +262,64 @@
     }
     & > section:not(.about) {
       & > .container {
-        display: grid;
-        grid-gap: var(--grid-gap);
-        grid-template-columns: [start] repeat(3, 1fr) [end];
         width: var(--index-width);
         margin: 0 auto;
-        padding: 90px 0 100px;
+        padding: 75px 0 105px;
         & > .title {
           grid-column: start / end;
           display: flex;
           justify-content: space-between;
+          & > .btn {
+            margin-top: 16px;
+          }
         }
-        & > .tabs {
-          grid-column: start / end;
+        & > .grid {
+          display: grid;
+          grid-gap: var(--grid-gap);
+          grid-template-columns: [start] repeat(3, 1fr) [end];
+          & > .tabs {
+            grid-column: start / end;
+          }
+          & > .card {
+            & img {
+              width: 100%;
+            }
+            & .body {
+              padding: var(--house-padding);
+            }
+          }
         }
-        & > .card {
-          & img {
-            width: 100%;
+      }
+      &.estate {
+        & img {
+          height: var(--house-img-height);
+        }
+        & .body {
+          transform: scaleX(0.94);
+          transform-origin: left center;
+          & .title {
+            font-size: 18px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          & .value {
+            font-size: 16px;
+            & > .num {
+              color: var(--color-yellow);
+              font-size: 28px;
+              font-weight: bold;
+            }
+          }
+          & .type {
+            color: var(--font-color-light-4);
+            font-size: 14px;
+            margin-top: 4px;
           }
         }
       }
       &.toutism {
         background-color: var(--color-white);
-        & > .container {
+        & > .container > .grid {
           grid-template-columns: [start] repeat(2, 1fr) [end];
         }
       }

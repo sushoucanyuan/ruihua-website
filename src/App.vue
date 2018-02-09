@@ -20,6 +20,12 @@
     list-style: none;
   }
 
+  .ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
   #app {
     font-family: "Open Sans", "Helvetica Neue", Arial, "Hiragino Sans GB",
       "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;

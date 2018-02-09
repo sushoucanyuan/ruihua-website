@@ -2,9 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import index from '@/views/index'
 import home from '@/views/home'
-import overseas from '@/views/overseas'
+import overseas from '@/views/overseas-list'
 import overseasHouse from '@/views/overseas-house'
 import overseasInfo from '@/views/overseas-info'
+import trustFund from '@/views/trust-fund-list'
 
 Vue.use(Router)
 
@@ -40,14 +41,10 @@ export default new Router({
     }, {
       path: 'trust-fund',
       name: 'trust-fund',
-      component: home
+      component: trustFund
     }, {
       path: 'about-ruihua',
       name: 'about-ruihua',
-      component: home
-    }, {
-      path: 'info-table',
-      name: 'info-table',
       component: home
     }]
   }]

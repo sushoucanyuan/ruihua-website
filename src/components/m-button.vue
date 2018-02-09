@@ -1,8 +1,8 @@
 <template>
   <button class="m-button" :class="['type-' + type, 'size-' + size]" @click="handleClick">
-    <span v-if="$slots.default" @click="handleInnerClick">
+    <template v-if="$slots.default" @click="handleInnerClick">
       <slot></slot>
-    </span>
+    </template>
   </button>
 </template>
 
@@ -40,34 +40,32 @@
     font-family: var(--font-family-base);
     font-weight: bold;
     box-sizing: border-box;
-    transition: .1s;
+    transition: 0.1s;
     &:focus {
       outline: none;
     }
     /* type */
     &.type-default {
+      cursor: pointer;
       color: var(--color-white);
       border: none;
       background-color: var(--color-yellow);
-      &:hover {
-        cursor: pointer;
-      }
     }
     &.type-plain {
+      cursor: pointer;
       color: var(--color-yellow);
       background-color: color(var(--color-white) a(60%));
       border: 1px solid var(--color-yellow);
       &:hover {
-        cursor: pointer;
         color: var(--color-white);
         background-color: var(--color-yellow);
       }
     }
     &.type-text {
+      cursor: pointer;
       color: rgb(0, 0, 0);
       background-color: transparent;
       > span:hover {
-        cursor: pointer;
         color: var(--color-yellow);
       }
     }
@@ -86,10 +84,11 @@
       height: 50px;
       border-radius: 5px;
     }
-    &.size-large {
-      font-size: 14px;
-      padding: 10px 20px;
-      border-radius: 4px;
+    &.size-large{
+      font-size: 18px;
+      letter-spacing: 1px;
+      width: 200px;
+      height: 45px;            
     }
   }
 </style>

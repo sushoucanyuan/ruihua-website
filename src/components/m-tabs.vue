@@ -20,6 +20,10 @@
 <style lang="postcss">
   @import "../assets/css/var.css";
 
+  :root {
+    --color-gray: #535353;
+  }
+
   .m-tabs {
     &.type-default {
       display: flex;
@@ -27,14 +31,13 @@
       justify-content: space-evenly;
       border-bottom: 2px solid var(--color-yellow);
       & > .m-tab-item {
-        color: var(--font-color-light-2);
+        cursor: pointer;
+        color: var(--color-gray);
         font-size: 16px;
         line-height: 70px;
+        transition: 0.1s;
         &:matches(.is-active, :hover) {
           color: var(--color-yellow);
-        }
-        &:hover {
-          cursor: pointer;
         }
       }
     }
@@ -49,19 +52,36 @@
         width: 150px;
         padding: 12px 0;
         border-radius: 5px;
+        transition: 0.1s;
         &.is-active {
+          cursor: default;
           color: var(--color-white);
           background-color: var(--color-yellow);
-          &:hover {
-            cursor: default;
-          }
         }
         &:not(.is-active) {
-          color: var(--font-color-light-2);
+          cursor: pointer;
+          color: var(--color-gray);
           &:hover {
-            cursor: pointer;
             color: var(--color-yellow);
           }
+        }
+      }
+    }
+    &.type-text {
+      display: flex;
+      & > .m-tab-item {
+        cursor: pointer;
+        color: var(--font-color-light-4);
+        font-size: 16px;
+        transition: 0.1s;
+        &:not(:last-child) {
+          margin-right: 20px;
+        }
+        &.is-active {
+          cursor: default;
+        }
+        &:matches(.is-active, :hover) {
+          color: var(--font-color-light-1);
         }
       }
     }
