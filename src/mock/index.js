@@ -17,5 +17,9 @@ mock
   .onGet('/getHotHouses').reply(200, hotHouses)
   .onGet('/getHouseInfo').reply(200, housesInfo)
   .onGet('/getHousesPage').reply(200, 18)
+  .onGet('/getTripBannerImg').reply(200, '/static/bg.png')
+  .onGet('/getTripDetail').reply(200, {})
+  .onGet('/getHotTrips').reply(200, [])
+  .onGet('/getTrips').reply(200, [])
 
 export default mock

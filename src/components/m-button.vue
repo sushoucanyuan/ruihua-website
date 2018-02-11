@@ -69,7 +69,24 @@
         color: var(--color-yellow);
       }
     }
+    &.type-sort {
+      color: color(var(--font-color-light-4) a(60%));
+      background-color: var(--color-white);
+      border: 1px solid color(var(--font-color-light-4) a(60%));
+      &:hover {
+        cursor: pointer;
+        color: var(--color-yellow);
+        border: 1px solid var(--color-yellow);
+      }
+    }
     /* size */
+    &.size-mini {
+      font-size: 14px;
+      letter-spacing: 1px;
+      width: 62px;
+      height: 26px;
+      border-radius: 4px;
+    }
     &.size-small {
       font-size: 16px;
       letter-spacing: 1px;

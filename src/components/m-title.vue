@@ -103,7 +103,7 @@
         font-weight: bold;
         padding-left: 4px;
       }
-      & > .m-title-en {
+      & > :matches(.m-title-en, .m-title-tips) {
         color: var(--font-color-light-4);
         font-size: 24px;
         font-family: var(--font-family-en);
@@ -121,6 +121,11 @@
           margin: auto 0;
           background-color: currentcolor;
         }
+      }
+      & > .m-title-tips {
+        color: var(--font-color-light-3);
+        font-size: 14px;
+        margin-top: 5px;
       }
       &.line {
         padding: 20px 0;

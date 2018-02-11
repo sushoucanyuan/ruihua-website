@@ -4,8 +4,9 @@
   --color-white: #fff;
   --color-yellow: #c59b54;
   --color-orange: #f08513;
-  --color-border: #c0c0c0;
+  --color-border: #c9c9c9;
   --color-background: #1d1c1b;
+  --color-line: color(var(--color-border) a(40%));  
   /* Font
   -------------------------- */
   --font-color-light-1: #000;

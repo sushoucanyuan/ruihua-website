@@ -1,6 +1,7 @@
 <template>
   <div class="m-tabs" :class="'type-' + type">
-    <slot></slot>
+    <slot ></slot>
+    <span v-show="!$slots.default" class="m-tabs-loading">努力加载中 ...</span>
   </div>
 </template>
 
@@ -12,7 +13,11 @@
         type: String,
         default: 'default'
       },
-      value: {}
+      value: {},
+      loading: {
+        type: Boolean,
+        default: false
+      }
     }
   }
 </script>
@@ -25,16 +30,20 @@
   }
 
   .m-tabs {
+    & > .m-tabs-loading {
+      text-indent: 3px;
+      letter-spacing: 3px;
+    }
     &.type-default {
+      color: var(--color-gray);
+      font-size: 16px;
+      line-height: 70px;
       display: flex;
       justify-content: space-around; /* 兼容低版本 */
       justify-content: space-evenly;
       border-bottom: 2px solid var(--color-yellow);
       & > .m-tab-item {
         cursor: pointer;
-        color: var(--color-gray);
-        font-size: 16px;
-        line-height: 70px;
         transition: 0.1s;
         &:matches(.is-active, :hover) {
           color: var(--color-yellow);
@@ -82,6 +91,27 @@
         }
         &:matches(.is-active, :hover) {
           color: var(--font-color-light-1);
+        }
+      }
+    }
+    &.type-banding {
+      color: var(--color-white);
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 66px;
+      display: flex;
+      justify-content: space-around;
+      background-color: var(--color-yellow);
+      & > .m-tab-item {
+        text-align: center;
+        letter-spacing: 1px;
+        width: 25%;
+        &.is-active {
+          cursor: default;
+          background-color: #ad7d34;
+        }
+        &:not(.is-active) {
+          cursor: pointer;
         }
       }
     }
