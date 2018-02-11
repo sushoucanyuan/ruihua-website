@@ -177,11 +177,11 @@
         }
       }
     }
-    .footer{
+    .footer {
+      width: 100%;
+      & > img {
         width: 100%;
-        &>img {
-            width: 100%;
-            height: 200px;
-        }
+        height: 200px;
+      }
     }
 </style>
