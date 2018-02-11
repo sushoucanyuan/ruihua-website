@@ -10,7 +10,9 @@
   }
 </script>
 
-<style>
+<style lang="postcss">
+  @import "./assets/css/var.css";
+
   * {
     margin: 0;
     padding: 0;

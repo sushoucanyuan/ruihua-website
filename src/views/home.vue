@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <m-swiper class="swiper" :list="banner"></m-swiper>
     <section class="about">
       <div>
         <span class="line"></span>
@@ -87,16 +88,20 @@
 </template>
 
 <script>
-  import api from '@/api'
+  import api_other from '@/api/other'
+  import api_house from '@/api/house'
+  import mIcon from '@/components/m-icon.vue'
   import mTitle from '@/components/m-title.vue'
   import mButton from '@/components/m-button.vue'
   import mCard from '@/components/m-card.vue'
   import mTabs from '@/components/m-tabs.vue'
   import mTabItem from '@/components/m-tab-item.vue'
+  import mSwiper from '@/components/m-swiper.vue'
 
   export default {
     data() {
       return {
+        banner: [],
         estate: {
           tabId: 0,
           citys: [],
@@ -129,6 +134,23 @@
           {
             id: 3
           }]
+        },
+        swiper: {
+          autoplay: {
+            delay: 5000,
+            disableOnInteraction: false
+          },
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+            renderBullet(index, className) {
+              return `<span class="${className} swiper-pagination-bullet-custom banner-pagination"></span>`
+            }
+          },
+          navigation: {
+            nextEl: '.banner-button-next',
+            prevEl: '.banner-button-prev',
+          }
         }
       }
     },
@@ -138,21 +160,29 @@
       }
     },
     components: {
+      mIcon,
       mTitle,
       mButton,
       mCard,
       mTabs,
-      mTabItem
+      mTabItem,
+      mSwiper
     },
     methods: {
       getHouses(placeid) {
-        api.getHouses({ placeid, num: 6 }).then(houses => {
+        api_house.getHouses({ placeid, num: 6 }).then(houses => {
           this.estate.houses = houses
         })
       }
     },
     beforeMount() {
-      api.getCitys().then(citys => {
+      api_other.getBannerList().then(banner => {
+        this.banner = banner
+        for (let i = 0; i < 3; i++) {
+          this.banner.push(this.banner[0])
+        }
+      })
+      api_house.getCitys().then(citys => {
         this.estate.citys = citys
         this.getHouses(citys[0].placeid)
       })
@@ -165,6 +195,9 @@
 
   .home {
     background-color: #f5f5f5;
+    & > .swiper {
+      height: 700px;
+    }
     & > .about {
       display: flex;
       & > div {

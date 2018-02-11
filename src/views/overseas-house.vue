@@ -102,7 +102,7 @@
 </template>
 
 <script>
-  import api from '@/api'
+  import api from '@/api/house'
   import mCard from '@/components/m-card.vue'
   import mIcon from '@/components/m-icon.vue'
   import mTitle from '@/components/m-title.vue'

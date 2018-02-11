@@ -10,9 +10,12 @@ import {
   Loading,
   Pagination
 } from 'element-ui'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
 
 Vue.use(Loading)
 Vue.use(Pagination)
+Vue.use(VueAwesomeSwiper, /* { default global options } */)
 
 Vue.config.productionTip = false
 

@@ -6,6 +6,11 @@ const instance = axios.create({
 })
 
 export default {
+  getHouseBanners(){
+    return instance.get('getHouseBanners').then(({
+      data
+    }) => data)  
+  },
   getCitys() {
     return instance.get('getCitys').then(({
       data

@@ -1,11 +1,15 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'open/api/house',
-  timeout: 5000
+  baseURL: 'open/api/other'
 })
 
 export default {
+  getBannerList() {
+    return instance.get('getBannerList').then(({
+      data
+    }) => data)
+  },
   getCitys() {
     return instance.get('getCitys').then(({
       data

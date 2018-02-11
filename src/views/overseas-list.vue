@@ -1,11 +1,14 @@
 <template>
   <div class="overseas">
+    <m-swiper class="swiper" :list="banner"></m-swiper>
     <div class="estate">
       <m-title class="title" :level="1" en="estate" cn="海外房产" tips="专注海外精品房产投资，国际顶尖房产投资管理团队"></m-title>
       <div class="grid">
         <m-tabs class="tabs" v-model="tabId">
-          <m-tab-item :id="0">全部</m-tab-item>
-          <m-tab-item v-for="(item, index) in citys" :key="item.id" :id="index + 1">{{item.name}}</m-tab-item>
+          <template v-if="citys.length">
+            <m-tab-item :id="0">全部</m-tab-item>
+            <m-tab-item v-for="(item, index) in citys" :key="item.id" :id="index + 1">{{item.name}}</m-tab-item>
+          </template>
         </m-tabs>
         <section class="ruihua-recommend">
           <m-title class="title ellipsis" :level="2" cn="瑞华推荐" en="recommend"></m-title>
@@ -80,7 +83,7 @@
 </template>
 
 <script>
-  import api from '@/api'
+  import api from '@/api/house'
   import mIcon from '@/components/m-icon.vue'
   import mTitle from '@/components/m-title.vue'
   import mButton from '@/components/m-button.vue'
@@ -88,10 +91,12 @@
   import mTabs from '@/components/m-tabs.vue'
   import mTabItem from '@/components/m-tab-item.vue'
   import mRecommend from '@/components/m-recommend.vue'
+  import mSwiper from '@/components/m-swiper.vue'
 
   export default {
     data() {
       return {
+        banner: [],
         tabId: this.$route.query.tabId,
         citys: [],
         recommend: [],
@@ -198,9 +203,13 @@
       mButton,
       mTabs,
       mTabItem,
-      mRecommend
+      mRecommend,
+      mSwiper
     },
     beforeMount() {
+      api.getHouseBanners().then(banner => {
+        this.banner = banner
+      })
       api.getCitys().then(citys => {
         this.citys = citys
         let placeid = this.placeid
@@ -230,6 +239,9 @@
   @import "../assets/css/var.css";
 
   .overseas {
+    & > .swiper {
+      height: 560px;
+    }
     & > .estate {
       width: var(--index-width);
       margin: 0 auto;

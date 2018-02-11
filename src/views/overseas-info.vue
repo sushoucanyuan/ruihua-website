@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import api from '@/api'
+  import api from '@/api/house'
   import mCard from '@/components/m-card.vue'
   import mTitle from '@/components/m-title.vue'
   import mBreadcrumb from '@/components/m-breadcrumb.vue'
