@@ -17,7 +17,7 @@
         <m-tool :types="['推荐', '时间', '价格']" :typeId.sync="type" :sortway.sync="sortway"></m-tool>
       </div>
       <div class="none" v-show="!trips.length">暂时没有数据惹~</div>
-      <m-card class="card" v-for="item in trips" :key="item.id" direction="row" @click.native="$router.push({name: 'tourStudy-detail', params: {id: item.id}})">
+      <m-card class="card" v-for="item in trips" :key="item.id" direction="row" @click.native="$router.push({name: 'tour-study-detail', params: {id: item.id}})">
         <div class="header" slot="header">
           <img :src="item.picurl" />
         </div>
@@ -42,28 +42,7 @@
       </m-card>
       <el-pagination class="pagination" layout="prev, pager, next, jumper" :page-count="count" :page-size="num" @current-change="page => this.page = page" background></el-pagination>
     </section>
-    <section class="footer">
-      <div>服务于定制旅游，专注学生国际化教育和成长</div>
-      <div>赴澳旅游游学引领者</div>
-      <div class="imgs">
-        <div>
-          <img src="/static/tour-study/anquan.png" />
-          <span>境外安全 完美保障</span>
-        </div>
-        <div>
-          <img src="/static/tour-study/gexing.png" />
-          <span>个性定制 私享美景</span>
-        </div>
-        <div>
-          <img src="/static/tour-study/baoxian.png" />
-          <span>海外保险 共享无忧</span>
-        </div>
-        <div>
-          <img src="/static/tour-study/luxian.png" />
-          <span>精选路线 美不胜收</span>
-        </div>
-      </div>
-    </section>
+    <tour-study-footer></tour-study-footer>
   </div>
 </template>
 
@@ -76,6 +55,7 @@
   import mButton from '@/components/m-button.vue'
   import mCard from '@/components/m-card.vue'
   import mTool from '@/components/m-tool.vue'
+  import tourStudyFooter from '@/views/tour-study-footer.vue'
 
   export default {
     data() {
@@ -136,7 +116,8 @@
       mTitle,
       mButton,
       mCard,
-      mTool
+      mTool,
+      tourStudyFooter
     },
     beforeMount() {
       api.getTripBannerImg().then(picurl => {
@@ -281,32 +262,6 @@
       & > .pagination {
         text-align: center;
         margin-top: 44px;
-      }
-    }
-    & > .footer {
-      color: var(--color-yellow);
-      font-size: 24px;
-      line-height: 2;
-      letter-spacing: 8px;
-      text-align: center;
-      box-sizing: border-box;
-      height: 520px;
-      background: url("/static/tour-study/footer.png") no-repeat scroll center;
-      background-size: cover;
-      padding: 60px 0 0;
-      & > .imgs {
-        display: flex;
-        justify-content: space-around;
-        justify-content: space-evenly;
-        margin-top: 110px;
-        & > div {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          & > span {
-            margin-top: 30px;
-          }
-        }
       }
     }
   }

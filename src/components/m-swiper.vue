@@ -1,6 +1,6 @@
 <template>
-  <swiper class="m-swiper" :class="`type-${type}`" :options="swiper">
-    <swiper-slide v-for="(item,index) in list" :key="index">
+  <swiper class="m-swiper" :options="swiper" :class="'type-' + type">
+    <swiper-slide v-for="(item, index) in list" :key="index">
       <img class="banner" :src="item.picurl">
     </swiper-slide>
     <div class="swiper-pagination" slot="pagination"></div>
@@ -18,13 +18,14 @@
 
   export default {
     props: {
+      list: {
+        type: Array,
+        required: true,
+        default: () => []
+      },
       type: {
         type: String,
         default: 'default'
-      },
-      list: {
-        type: Array,
-        required: true
       }
     },
     data() {

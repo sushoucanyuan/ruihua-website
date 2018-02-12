@@ -16,11 +16,13 @@ export default {
       data
     }) => data)
   },
-  getCount(){
+  getCount() {
     return Promise.resolve(100)
   },
   getTrips(params) {
-    return instance.get('getTrips', {params}).then(({
+    return instance.get('getTrips', {
+      params
+    }).then(({
       data
     }) => data)
   },
@@ -29,8 +31,10 @@ export default {
       data
     }) => data)
   },
-  getTripDetail() {
-    return instance.get('getTripDetail', params).then(({
+  getTripDetail(params) {
+    return instance.get('getTripDetail', {
+      params
+    }).then(({
       data
     }) => data)
   }

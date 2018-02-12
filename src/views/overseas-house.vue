@@ -2,7 +2,7 @@
   <div class="overseas-house">
     <div class="container">
       <m-title en="estate" cn="海外房产" tips="专注海外精品房产投资，国际顶尖房产投资管理团队"></m-title>
-      <m-breadcrumb class="breadcrumb" separator=">">
+      <m-breadcrumb separator=">">
         <m-breadcrumb-item :to="{name: 'home'}">瑞华网</m-breadcrumb-item>
         <m-breadcrumb-item :to="{name: 'overseas-property', query: {tabId: 0}}">海外房产</m-breadcrumb-item>
         <m-breadcrumb-item :to="{name: 'overseas-property', query: {tabId: 2}}">墨尔本</m-breadcrumb-item>
@@ -150,9 +150,6 @@
       width: var(--index-width);
       margin: 0 auto;
       padding-top: var(--index-padding-top);
-      & > .breadcrumb {
-        margin-bottom: 50px;
-      }
       & > .house {
         & .header {
           width: 635px;

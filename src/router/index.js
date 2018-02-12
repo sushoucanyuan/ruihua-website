@@ -7,7 +7,7 @@ import overseasHouse from '@/views/overseas-house'
 import overseasInfo from '@/views/overseas-info'
 import trustFund from '@/views/trust-fund-list'
 import tourStudy from '@/views/tour-study'
-import tourStudyDetail from '@/views/tourStudy-detail'
+import tourStudyDetail from '@/views/tour-study-detail'
 
 Vue.use(Router)
 
@@ -42,7 +42,8 @@ export default new Router({
       component: tourStudy
     }, {
       path: 'tour-study/detail/:id',
-      name: 'tourStudy-detail',
+      name: 'tour-study-detail',
+      props: true,      
       component: tourStudyDetail
     }, {
       path: 'trust-fund',

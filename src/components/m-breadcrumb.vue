@@ -23,6 +23,7 @@
     color: var(--font-color-light-3);
     font-size: 14px;
     line-height: 1.4;
+    margin-bottom: 50px;
     & > .m-breadcrumb-item {
       cursor: default;
       & > .m-breadcrumb-item-label {

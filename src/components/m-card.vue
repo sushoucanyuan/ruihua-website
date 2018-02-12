@@ -3,7 +3,7 @@
     <div class="m-card-header">
       <slot name="header"></slot>
     </div>
-    <div class="m-card-body">
+    <div v-if="$slots.default" class="m-card-body">
       <slot></slot>
     </div>
   </div>
