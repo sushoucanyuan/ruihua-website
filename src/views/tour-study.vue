@@ -20,12 +20,14 @@
       <m-card class="card" v-for="item in trips" :key="item.id" direction="row" @click.native="$router.push({name: 'tour-study-detail', params: {id: item.id}})">
         <div class="header" slot="header">
           <img :src="item.picurl" />
+          <div class="hot" v-show="item.ishot">
+            <m-icon class="icon" name="huo"></m-icon>
+            <span>热门推荐</span>
+          </div>
         </div>
         <div class="body">
           <div class="title">{{item.title}}</div>
-          <div class="advantage">
-            <span>{{item.advantage}}</span>
-          </div>
+          <m-tags class="advantage" :string="item.advantage"></m-tags>
           <div class="container">
             <div>
               <div class="info ellipsis">{{item.info}}</div>
@@ -40,7 +42,7 @@
           </div>
         </div>
       </m-card>
-      <el-pagination class="pagination" layout="prev, pager, next, jumper" :page-count="count" :page-size="num" @current-change="page => this.page = page" background></el-pagination>
+      <el-pagination class="pagination" layout="prev, pager, next, jumper" :total="count" :page-size="num" @current-change="page => this.page = page" background></el-pagination>
     </section>
     <tour-study-footer></tour-study-footer>
   </div>
@@ -87,11 +89,29 @@
           this.trips = trips
           this.loading = false
         })
+      },
+      getTripCount: function () {
+        if (this.typeId) {
+          api.getTripCount(this.typeId).then(count => {
+            this.count = count
+          })
+        }
+        else {
+          api.getTripCount().then(count => {
+            this.count = count
+          })
+        }
       }
     },
     watch: {
       typeId: function () {
-        this.getTrips()
+        this.getTripCount()
+        if (this.page == 1) {
+          this.getTrips()
+        }
+        else {
+          this.page = 1
+        }
       },
       type: function () {
         this.getTrips()
@@ -114,9 +134,7 @@
       api.getTripType().then(types => {
         this.types = types
         this.getTrips()
-        api.getCount().then(count => {
-          this.count = count
-        })
+        this.getTripCount()
       })
     }
   }
@@ -161,12 +179,13 @@
         font-size: 28px;
         letter-spacing: 5px;
         text-align: center;
-        padding: 150px 0;
+        padding: 70px 0;
       }
       & > .card {
         cursor: pointer;
         margin-bottom: 26px;
         & .header {
+          position: relative;
           width: 320px;
           height: 170px;
           padding: 4px;
@@ -174,6 +193,29 @@
             display: block;
             width: 100%;
             height: 100%;
+          }
+          & > .hot {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            left: 4px;
+            bottom: 4px;
+            width: 110px;
+            background-color: rgb(228, 83, 64);
+            & > .icon{
+              color: var(--color-white);
+              width: 33px;
+            }
+            & > span {
+              color: var(--color-white);
+              font-size: 14px;
+              font-weight: bold;
+              line-height: 35px;
+              text-align: center;
+              flex-grow: 1;
+
+              background-color: var(--color-orange);
+            }
           }
         }
         & .body {
@@ -184,20 +226,10 @@
             line-height: 38px;
             letter-spacing: 1px;
             border-bottom: 1px solid var(--color-line);
-          }
-          & > .advantage > span {
-            --height: 26px;
-            color: var(--color-white);
-            font-size: 14px;
-            letter-spacing: 1px;
-            line-height: var(--height);
-            display: inline-block;
-            padding: 0 18px;
-            margin: 11px 0;
-            border-radius: calc(var(--height) / 2);
-            background-color: var(--color-yellow);
+            margin-bottom: 12px;
           }
           & > .container {
+            margin-top: 12px;
             display: flex;
             & > :first-child {
               flex-grow: 1;
@@ -218,7 +250,7 @@
                 padding: 0 10px;
                 border-radius: 5px;
                 border: 1px solid var(--color-border);
-                margin-right: 25px;
+                margin-right: 35px;
                 transition: 0.1s;
                 &:hover {
                   color: var(--color-yellow);
@@ -229,7 +261,7 @@
                 color: var(--color-orange);
                 font-weight: bold;
                 text-align: right;
-                min-width: 120px;
+                min-width: 100px;
                 & > .num {
                   font-size: 38px;
                   position: relative;

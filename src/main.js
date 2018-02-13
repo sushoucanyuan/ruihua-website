@@ -9,6 +9,7 @@ import '@/assets/icons/iconfont'
 //import 基础组件
 import mIcon from '@/components/m-icon.vue'
 import mCard from '@/components/m-card.vue'
+import mTags from '@/components/m-tags.vue'
 import mTitle from '@/components/m-title.vue'
 import mButton from '@/components/m-button.vue'
 import mTabs from '@/components/m-tabs.vue'
@@ -30,6 +31,7 @@ Vue.use(VueAwesomeSwiper, /* { default global options } */ )
 
 Vue.component(mIcon.name, mIcon)
 Vue.component(mCard.name, mCard)
+Vue.component(mTags.name, mTags)
 Vue.component(mTitle.name, mTitle)
 Vue.component(mButton.name, mButton)
 Vue.component(mTabs.name, mTabs)

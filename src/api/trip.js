@@ -16,8 +16,14 @@ export default {
       data
     }) => data)
   },
-  getCount() {
-    return Promise.resolve(100)
+  getTripCount(triptype) {
+    return instance.get('getTripCount', {
+      params: {
+        triptype
+      }
+    }).then(({
+      data
+    }) => data.count)
   },
   getTrips(params) {
     return instance.get('getTrips', {

@@ -3,7 +3,7 @@
     <!-- <side-tool></side-tool> -->
     <index-header></index-header>
     <main>
-      <keep-alive>
+      <keep-alive :exclude="['overseas-house', 'overseas-info', 'tour-study-detail', 'trust-fund-detail']">
         <router-view/>
       </keep-alive>
     </main>

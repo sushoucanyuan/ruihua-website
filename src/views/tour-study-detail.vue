@@ -23,7 +23,9 @@
               </div>
               <div>
                 <span class="key">产品特色：</span>
-                <span class="value">{{trip.advantage}}</span>
+                <span class="value">
+                  <m-tags :string="trip.advantage"></m-tags>
+                </span>
               </div>
               <div>
                 <span class="key">行&emsp;&emsp;程：</span>
@@ -41,7 +43,7 @@
             <div class="btns">
               <m-button class="btn" size="large">马上预定</m-button>
               <m-button class="btn" size="large">
-                <m-icon class="icon" name="dianhua"></m-icon>&nbsp;&nbsp;
+                <m-icon class="icon" name="dianhua"></m-icon>
                 <span class="number">733-423-297</span>
               </m-button>
             </div>
@@ -78,7 +80,7 @@
         </div>
         <div class="schedule">
           <m-title :level="2" cn="行程安排" en="schedule"></m-title>
-          <m-card class="schedule-info" v-html="trip.schedule || '暂无说明~'"></m-card>
+          <m-card class="schedule-info" v-html="trip.arrange || '暂无说明~'"></m-card>
           <m-tabs class="intruction-tabs" type="tag" v-model="tripId">
             <m-tab-item v-for="(item, index) in ['费用说明','付款方式','签证说明','行前准备','常见问题']" :key="index" :id="index">{{item}}</m-tab-item>
           </m-tabs>
@@ -133,14 +135,12 @@
       mSwiperThumbnail,
       tourStudyFooter
     },
-    beforeRouteEnter(to, from, next) {
-      next(vm => {
-        api.getTripDetail({ id: vm.id }).then(trip => {
-          vm.trip = trip
-        })
-        api.getHotTrips().then(recommend => {
-          vm.recommend = recommend
-        })
+    beforeMount() {
+      api.getTripDetail({ id: this.id }).then(trip => {
+        this.trip = trip
+      })
+      api.getHotTrips().then(recommend => {
+        this.recommend = recommend
       })
     }
   }
@@ -152,40 +152,39 @@
   .tourstudy-detail {
     background-image: url("/static/tour-study/detail-bg.png");
     background-repeat: no-repeat;
+    background-size: contain;
     & > .container {
-      --border-color: #c9c9c9;
       width: var(--index-width);
       margin: 0 auto;
       padding-top: var(--index-padding-top);
       & > .info {
-        margin: 50px auto 50px;
         & > .detail {
           & .swiper {
             width: 720px;
             height: 480px;
           }
           & .body {
-            padding: 35px 40px;
+            padding: 40px 45px 0 34px;
             & > .title {
               font-size: 18px;
               font-weight: bold;
-              line-height: 40px;
-              padding-bottom: 5px;
+              line-height: 30px;
+              letter-spacing: 1px;
+              padding-bottom: 10px;
               border-bottom: 1px dashed var(--color-border);
             }
             & > .detail {
-              padding-top: 5px;
+              padding-top: 22px;
               & > div {
                 color: var(--font-color-light-4);
                 font-size: 14px;
-                line-height: 2.1;
+                line-height: 32px;
                 display: flex;
                 &.ellipsis {
                   display: block;
                 }
                 & > .key {
                   flex-shrink: 0;
-                  vertical-align: baseline;
                   padding-right: 15px;
                 }
                 & > .value {
@@ -195,12 +194,15 @@
                     font-size: 18px;
                     font-weight: bold;
                     display: inline-block;
+                    margin-left: -14px;
                     transform: translate(6px, -10px);
                   }
                   & > .price {
                     color: var(--color-orange);
                     font-size: 32px;
+                    line-height: 1;
                     font-weight: bold;
+                    letter-spacing: 2px;
                   }
                 }
               }
@@ -222,7 +224,7 @@
                 align-items: center;
                 justify-content: center;
                 & .icon {
-                  margin-right: -20px;
+                  margin-right: -8px;
                 }
                 & .number {
                   letter-spacing: 0;
@@ -253,7 +255,7 @@
               position: relative;
               display: flex;
               flex-direction: column;
-              padding: 50px 30px 0;
+              padding: 50px 20px 0;
               border: 2px solid var(--color-yellow);
               &::before {
                 content: "";
@@ -288,23 +290,28 @@
         & > .schedule {
           margin-top: 80px;
           & > :matches(.schedule-info, .intruction) {
+            font-size: 14px;
+            line-height: 30px;
+            letter-spacing: 1px;
             padding: 30px 60px;
             overflow-y: auto;
+            transition: 0.2s;
           }
           & > .schedule-info {
             margin-top: 40px;
-            height: 900px;
+            min-height: 600px;
+            max-height: 900px;
+            &>>>img {
+              margin: 20px 10px 20px 0;
+            }
           }
           & > .intruction-tabs {
             margin-top: 74px;
           }
           & > .intruction {
-            font-size: 14px;
-            line-height: 30px;
-            letter-spacing: 1px;
-            height: 560px;
+            min-height: 300px;
+            max-height: 600px;
             margin-top: 4px;
-            border: 1px solid var(--border-color);
           }
         }
         & > .recommend {
@@ -322,42 +329,44 @@
           }
         }
       }
-      & > .recommend > .cards {
-        display: grid;
-        grid-gap: var(--grid-gap);
-        grid-template-columns: [start] repeat(3, 1fr) [end];
-        padding-top: 40px;
-        & > .card {
-          cursor: pointer;
-          position: relative;
-          & .tips {
-            color: var(--color-white);
-            font-size: 17px;
-            font-weight: bold;
-            line-height: 45px;
-            text-align: center;
-            letter-spacing: 1px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 120px;
-            background-color: var(--color-orange);
-          }
-          & .header {
-            height: var(--house-img-height);
-            overflow: hidden;
-            & img {
-              width: 100%;
-              height: 100%;
-              display: block;
+      & > .recommend {
+        margin: 90px 0 180px;
+        & > .cards {
+          display: grid;
+          grid-gap: var(--grid-gap);
+          grid-template-columns: [start] repeat(3, 1fr) [end];
+          padding-top: 40px;
+          & > .card {
+            cursor: pointer;
+            position: relative;
+            & .tips {
+              color: var(--color-white);
+              font-size: 17px;
+              font-weight: bold;
+              line-height: 45px;
+              text-align: center;
+              letter-spacing: 1px;
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 120px;
+              background-color: var(--color-orange);
             }
-          }
-          & .body {
-            font-size: 18px;
-            line-height: 24px;
-            font-family: var(--font-family-normal);
-            letter-spacing: 1px;
-            padding: 18px 32px 28px;
+            & .header {
+              height: 200px;
+              overflow: hidden;
+              & img {
+                width: 100%;
+                height: 100%;
+                display: block;
+              }
+            }
+            & .body {
+              font-size: 18px;
+              line-height: 28px;
+              font-family: var(--font-family-normal);
+              padding: 18px 32px 28px;
+            }
           }
         }
       }

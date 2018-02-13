@@ -8,7 +8,7 @@ module.exports = {
     "postcss-css-variables": {},
     "postcss-color-function": {},
     "postcss-selector-matches": {},
-    "postcss-selector-not": {},    
+    "postcss-selector-not": {},
     "autoprefixer": {}
   }
 }

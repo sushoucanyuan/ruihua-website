@@ -3,16 +3,25 @@ import Router from 'vue-router'
 
 import index from '@/views/index'
 import home from '@/views/home'
-const overseas = () => import ( /* webpackChunkName: "overseas" */ '@/views/overseas-list')
-const overseasHouse = () => import ( /* webpackChunkName: "overseasHouse" */ '@/views/overseas-house')
-const overseasInfo = () => import ( /* webpackChunkName: "overseasInfo" */ '@/views/overseas-info')
-const tourStudy = () => import( /* webpackChunkName: "tourStudy" */ '@/views/tour-study')
-const tourStudyDetail = () => import( /* webpackChunkName: "tourStudyDetail" */ '@/views/tour-study-detail')
-import trustFund from '@/views/trust-fund-list'
+
+const overseas = () =>
+  import ( /* webpackChunkName: "overseas" */ '@/views/overseas-list')
+const overseasHouse = () =>
+  import ( /* webpackChunkName: "overseasHouse" */ '@/views/overseas-house')
+const overseasInfo = () =>
+  import ( /* webpackChunkName: "overseasInfo" */ '@/views/overseas-info')
+const tourStudy = () =>
+  import ( /* webpackChunkName: "tourStudy" */ '@/views/tour-study')
+const tourStudyDetail = () =>
+  import ( /* webpackChunkName: "tourStudyDetail" */ '@/views/tour-study-detail')
+const trustFund = () =>
+  import ( /* webpackChunkName: "trustFund" */ '@/views/trust-fund-list')
+const trustFundDetail = () =>
+  import ( /* webpackChunkName: "trustFundDetail" */ '@/views/trust-fund-detail')
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [{
     path: '/',
     redirect: {
@@ -44,12 +53,17 @@ export default new Router({
     }, {
       path: 'tour-study/detail/:id',
       name: 'tour-study-detail',
-      props: true,      
+      props: true,
       component: tourStudyDetail
     }, {
       path: 'trust-fund',
       name: 'trust-fund',
       component: trustFund
+    }, {
+      path: 'trust-fund/detail/:id',
+      name: 'trust-fund-detail',
+      props: true,
+      component: trustFundDetail
     }, {
       path: 'about-ruihua',
       name: 'about-ruihua',
@@ -57,3 +71,12 @@ export default new Router({
     }]
   }]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.name != from.name) {
+    setTimeout(() => document.body.scrollTop = document.documentElement.scrollTop = 0, 200)
+  }
+  next()
+})
+
+export default router
