@@ -13,10 +13,6 @@
 </template>
 
 <script>
-  import mIcon from '@/components/m-icon.vue'
-  import mTabs from '@/components/m-tabs.vue'
-  import mTabItem from '@/components/m-tab-item.vue'
-
   export default {
     name: 'm-tool',
     props: ['types', 'typeId', 'sortway'],
@@ -25,11 +21,6 @@
         this.$emit('update:typeId', val)
       }
     },
-    components: {
-      mIcon,
-      mTabs,
-      mTabItem
-    }
   }
 </script>
 

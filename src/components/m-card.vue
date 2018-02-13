@@ -11,6 +11,7 @@
 
 <script>
   export default {
+    name: 'm-card',
     props: {
       direction: {
         type: String,
@@ -24,7 +25,7 @@
   @import "../assets/css/var.css";
 
   .m-card {
-    border: 1px solid #c0c0c0;
+    border: 1px solid var(--color-border);
     background-color: var(--color-white);
     &.direction-row {
       display: flex;

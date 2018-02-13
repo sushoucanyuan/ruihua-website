@@ -4,7 +4,7 @@
       <m-title :level="1" en="toutism" cn="旅游&游学" tips="定制旅游，游学自住一站式VIP服务"></m-title>
       <m-breadcrumb class="breadcrumb" separator=">">
         <m-breadcrumb-item :to="{name: 'home'}">瑞华网</m-breadcrumb-item>
-        <m-breadcrumb-item :to="{name: 'tour-study', query: {tabId: 0}}">旅游游学</m-breadcrumb-item>
+        <m-breadcrumb-item :to="{name: 'tour-study'}">旅游游学</m-breadcrumb-item>
         <m-breadcrumb-item>{{trip.title}}</m-breadcrumb-item>
       </m-breadcrumb>
       <div class="info">
@@ -105,15 +105,7 @@
 
 <script>
   import api from '@/api/trip'
-  import mIcon from '@/components/m-icon.vue'
-  import mTitle from '@/components/m-title.vue'
-  import mButton from '@/components/m-button.vue'
-  import mBreadcrumb from '@/components/m-breadcrumb.vue'
-  import mBreadcrumbItem from '@/components/m-breadcrumb-item.vue'
-  import mCard from '@/components/m-card.vue'
   import mSwiperThumbnail from '@/components/m-swiper-thumbnail.vue'
-  import mTabs from '@/components/m-tabs.vue'
-  import mTabItem from '@/components/m-tab-item.vue'
   import tourStudyFooter from '@/views/tour-study-footer.vue'
 
   export default {
@@ -138,16 +130,8 @@
       }
     },
     components: {
-      mTitle,
-      mBreadcrumb,
-      mBreadcrumbItem,
-      mCard,
       mSwiperThumbnail,
-      mTabs,
-      mTabItem,
-      tourStudyFooter,
-      mIcon,
-      mButton
+      tourStudyFooter
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {

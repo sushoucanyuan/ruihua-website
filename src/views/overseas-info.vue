@@ -22,10 +22,6 @@
 
 <script>
   import api from '@/api/house'
-  import mCard from '@/components/m-card.vue'
-  import mTitle from '@/components/m-title.vue'
-  import mBreadcrumb from '@/components/m-breadcrumb.vue'
-  import mBreadcrumbItem from '@/components/m-breadcrumb-item.vue'
   import mRecommend from '@/components/m-recommend.vue'
 
   export default {
@@ -35,10 +31,6 @@
       }
     },
     components: {
-      mCard,
-      mTitle,
-      mBreadcrumb,
-      mBreadcrumbItem,
       mRecommend
     },
     beforeMount() {

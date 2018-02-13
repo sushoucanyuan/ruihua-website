@@ -14,8 +14,6 @@
 </template>
 
 <script>
-  import mIcon from '@/components/m-icon.vue'
-
   export default {
     props: {
       list: {
@@ -48,9 +46,6 @@
           }
         }
       }
-    },
-    components: {
-      mIcon
     }
   }
 </script>

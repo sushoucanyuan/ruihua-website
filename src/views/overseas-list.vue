@@ -84,12 +84,6 @@
 
 <script>
   import api from '@/api/house'
-  import mIcon from '@/components/m-icon.vue'
-  import mTitle from '@/components/m-title.vue'
-  import mButton from '@/components/m-button.vue'
-  import mCard from '@/components/m-card.vue'
-  import mTabs from '@/components/m-tabs.vue'
-  import mTabItem from '@/components/m-tab-item.vue'
   import mRecommend from '@/components/m-recommend.vue'
   import mSwiper from '@/components/m-swiper.vue'
 
@@ -197,12 +191,6 @@
       }
     },
     components: {
-      mIcon,
-      mTitle,
-      mCard,
-      mButton,
-      mTabs,
-      mTabItem,
       mRecommend,
       mSwiper
     },

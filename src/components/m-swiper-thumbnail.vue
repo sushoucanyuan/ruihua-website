@@ -12,10 +12,6 @@
 </template>
 
 <script>
-  import mIcon from '@/components/m-icon.vue'
-  import mTabs from '@/components/m-tabs.vue'
-  import mTabItem from '@/components/m-tab-item.vue'
-
   export default {
     name: 'm-swiper-thumbnail',
     props: {
@@ -44,14 +40,6 @@
       slide_change: function () {
         this.swiperId = this.top.activeIndex
       }
-    },
-    components: {
-      mIcon,
-      mTabs,
-      mTabItem
-    },
-    mounted() {
-
     }
   }
 </script>

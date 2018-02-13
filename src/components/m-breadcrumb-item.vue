@@ -9,7 +9,7 @@
 
 <script>
   export default {
-    name: '',
+    name: 'm-breadcrumb-item',
     props: {
       to: {},
       replace: Boolean
@@ -21,7 +21,3 @@
     }
   }
 </script>
-
-<style>
-
-</style>

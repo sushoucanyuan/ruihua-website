@@ -48,12 +48,6 @@
 
 <script>
   import api from '@/api/trip'
-  import mTabs from '@/components/m-tabs.vue'
-  import mTabItem from '@/components/m-tab-item.vue'
-  import mIcon from '@/components/m-icon.vue'
-  import mTitle from '@/components/m-title.vue'
-  import mButton from '@/components/m-button.vue'
-  import mCard from '@/components/m-card.vue'
   import mTool from '@/components/m-tool.vue'
   import tourStudyFooter from '@/views/tour-study-footer.vue'
 
@@ -110,12 +104,6 @@
       }
     },
     components: {
-      mTabs,
-      mTabItem,
-      mIcon,
-      mTitle,
-      mButton,
-      mCard,
       mTool,
       tourStudyFooter
     },

@@ -21,15 +21,8 @@
 </template>
 
 <script>
-  import mIcon from '@/components/m-icon.vue'
-  import mCard from '@/components/m-card.vue'
-
   export default {
     props: ['item'],
-    components: {
-      mIcon,
-      mCard
-    }
   }
 </script>
 

@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import index from '@/views/index'
 import home from '@/views/home'
-import overseas from '@/views/overseas-list'
-import overseasHouse from '@/views/overseas-house'
-import overseasInfo from '@/views/overseas-info'
+const overseas = () => import ( /* webpackChunkName: "overseas" */ '@/views/overseas-list')
+const overseasHouse = () => import ( /* webpackChunkName: "overseasHouse" */ '@/views/overseas-house')
+const overseasInfo = () => import ( /* webpackChunkName: "overseasInfo" */ '@/views/overseas-info')
+const tourStudy = () => import( /* webpackChunkName: "tourStudy" */ '@/views/tour-study')
+const tourStudyDetail = () => import( /* webpackChunkName: "tourStudyDetail" */ '@/views/tour-study-detail')
 import trustFund from '@/views/trust-fund-list'
-import tourStudy from '@/views/tour-study'
-import tourStudyDetail from '@/views/tour-study-detail'
 
 Vue.use(Router)
 

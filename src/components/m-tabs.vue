@@ -13,8 +13,6 @@
 </template>
 
 <script>
-  import mIcon from '@/components/m-icon.vue'
-
   export default {
     name: 'm-tabs',
     props: {
@@ -62,9 +60,6 @@
       translate: function (val, oldVal) {
         this.$refs.container.style.transform = `translate(${this.translate}px)`
       }
-    },
-    components: {
-      mIcon
     },
     mounted() {
       if (this.nav) {
