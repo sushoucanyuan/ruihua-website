@@ -103,9 +103,6 @@
 
 <script>
   import api from '@/api/house'
-  import mCard from '@/components/m-card.vue'
-  import mIcon from '@/components/m-icon.vue'
-  import mTitle from '@/components/m-title.vue'
   import mButton from '@/components/m-button.vue'
   import mBreadcrumb from '@/components/m-breadcrumb.vue'
   import mBreadcrumbItem from '@/components/m-breadcrumb-item.vue'
@@ -120,9 +117,6 @@
       }
     },
     components: {
-      mCard,
-      mIcon,
-      mTitle,
       mButton,
       mBreadcrumb,
       mBreadcrumbItem,

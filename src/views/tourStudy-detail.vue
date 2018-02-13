@@ -58,10 +58,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import mTitle from '@/components/m-title.vue'
   import mBreadcrumb from '@/components/m-breadcrumb.vue'
   import mBreadcrumbItem from '@/components/m-breadcrumb-item.vue'
-  import mCard from '@/components/m-card.vue'
 
   export default {
     data() {
@@ -76,9 +74,7 @@
       }
     },
     components: {
-      mTitle,
       mBreadcrumb,
-      mBreadcrumbItem, mCard
     }
   }
 

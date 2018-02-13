@@ -39,16 +39,12 @@
 </template>
 
 <script>
-  import mIcon from '@/components/m-icon.vue'
 
   export default {
     data() {
       return {
         isShow: false
       }
-    },
-    components: {
-      mIcon
     },
     methods: {
       goTop() {
