@@ -26,7 +26,10 @@
         type: [Number, String],
         default: 1
       },
-      en: String,
+      en: {
+        type: String,
+        default: ''
+      },
       cn: String,
       tips: String,
       line: {

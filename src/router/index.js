@@ -18,6 +18,8 @@ const trustFund = () =>
   import ( /* webpackChunkName: "trustFund" */ '@/views/trust-fund-list')
 const trustFundDetail = () =>
   import ( /* webpackChunkName: "trustFundDetail" */ '@/views/trust-fund-detail')
+const aboutUs = () =>
+  import ( /* webpackChunkName: "aboutUs" */ '@/views/about-us')
 
 Vue.use(Router)
 
@@ -67,7 +69,7 @@ const router = new Router({
     }, {
       path: 'about-ruihua',
       name: 'about-ruihua',
-      component: home
+      component: aboutUs
     }]
   }]
 })

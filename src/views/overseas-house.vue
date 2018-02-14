@@ -4,9 +4,9 @@
       <m-title en="estate" cn="海外房产" tips="专注海外精品房产投资，国际顶尖房产投资管理团队"></m-title>
       <m-breadcrumb separator=">">
         <m-breadcrumb-item :to="{name: 'home'}">瑞华网</m-breadcrumb-item>
-        <m-breadcrumb-item :to="{name: 'overseas-property', query: {tabId: 0}}">海外房产</m-breadcrumb-item>
-        <m-breadcrumb-item :to="{name: 'overseas-property', query: {tabId: 2}}">墨尔本</m-breadcrumb-item>
-        <m-breadcrumb-item>墨尔本本地公寓</m-breadcrumb-item>
+        <m-breadcrumb-item :to="{name: 'overseas-property'}">海外房产</m-breadcrumb-item>
+        <m-breadcrumb-item :to="{name: 'overseas-property', query: {tabId: house.city}}">墨尔本</m-breadcrumb-item>
+        <m-breadcrumb-item>{{house.planname}}</m-breadcrumb-item>
       </m-breadcrumb>
       <m-card class="house" direction="row">
         <div class="header" slot="header">
@@ -16,7 +16,7 @@
           <div class="value">
             <div>总价：
               <span class="number">{{house.rmb}}</span>
-              万起（人名币）&nbsp;&nbsp;&nbsp;AUD：83.3万起（澳币）
+              万起（人名币）&nbsp;AUD：83.3万起（澳币）
             </div>
             <div class="rate">
               <m-icon class="icon" name="qian"></m-icon>首付{{house.rate}}</div>
@@ -27,9 +27,9 @@
             </div>
             <div class="key ellipsis">
               地&emsp;&emsp;区：
-              <span class="value place">{{house.place}}</span>
+              <span class="value place">{{house.placename}}</span>
               城市：
-              <span class="value">{{house.city}}</span>
+              <span class="value">{{house.cityname}}</span>
             </div>
             <div class="key ellipsis">房产类型：
               <span class="value">{{house.type}}</span>
@@ -65,7 +65,7 @@
         </div>
       </m-card>
       <m-title class="title" level="2" en="project introduction" cn="项目介绍" line></m-title>
-      <div class="intro">{{house.intro}}</div>
+      <div class="intro">{{house.intro || '暂无说明~'}}</div>
       <m-title class="title" level="2" en="surrounding facilities" cn="周边设施" line></m-title>
       <div class="resource">
         <div v-if="house.enduresource">
@@ -90,9 +90,9 @@
         </div>
       </div>
       <m-title class="title" level="2" en="property support" cn="物业配套" line></m-title>
-      <div class="property"></div>
+      <div class="property" v-html="house.property || '暂无说明~'"></div>
       <m-title class="title" level="2" en="huxing show" cn="户型展示" line></m-title>
-      <div class="show"></div>
+      <div class="show" v-html="house.layoutshow || '暂无说明~'"></div>
       <m-title class="title" level="2" en="recommend" cn="瑞华推荐" line></m-title>
       <div class="recommend">
         <m-recommend v-for="item in recommend" :key="item.planid" :item="item"></m-recommend>
@@ -106,6 +106,7 @@
   import mRecommend from '@/components/m-recommend.vue'
 
   export default {
+    name: 'overseas-house',
     props: ['id'],
     data() {
       return {
@@ -113,11 +114,16 @@
         recommend: []
       }
     },
+    methods: {
+      init() {
+
+      }
+    },
     components: {
       mRecommend
     },
     beforeMount() {
-      api.getHouse({ placeid: this.id }).then(house => {
+      api.getHouse({ id: this.id }).then(house => {
         this.house = house
       })
       api.getHotHouses({ num: 3 }).then(recommend => {
@@ -133,6 +139,8 @@
   .overseas-house {
     background-image: url("/static/background-top.png");
     background-repeat: no-repeat;
+    background-size: contain;
+    padding-bottom: 150px;
     & > .container {
       --line-height: 32px;
       width: var(--index-width);
@@ -151,7 +159,7 @@
           }
         }
         & .body {
-          padding: 25px 56px;
+          padding: 25px 30px 0 50px;
           & > .value {
             color: var(--font-color-light-1);
             font-size: 16px;

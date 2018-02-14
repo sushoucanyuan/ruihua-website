@@ -8,7 +8,7 @@
           <m-title class="title" :level="1" en="about" cn="公司简介"></m-title>
           <div class="cn">瑞华集团成立于2014年，总部设立于澳大利亚昆士兰省。瑞华集团扎根于澳大利亚，为澳洲本地及中国大陆的华人服务，业务涉及房地产销售、地产开发、房产租赁与管理、贷款服务、基金管理、国际猎聘、以及投资移民等多个领域。</div>
           <div class="en">Rivo Group was founded in Queensland, Australia in 2014. Based in Australia, Rivo provides professional servises to Chinese clients in Australia and Mainland China.Services across a range of areas from property development, property sales, property letting and man-agement, finance services, fund management, international recruit-ment to investment immigration.</div>
-          <m-button class="btn" type="plain">了解我们</m-button>
+          <m-button class="btn" type="plain" @click="$router.push({name: 'about-ruihua'})">了解我们</m-button>
         </div>
       </div>
       <div>
@@ -33,14 +33,17 @@
       <div class="container">
         <div class="title">
           <m-title :level="1" en="estate" cn="海外房产" tips="专注海外精品房产投资，国际顶尖房产投资管理团队"></m-title>
-          <m-button class="btn" type="plain" size="small">更多</m-button>
+          <m-button class="btn" type="plain" size="small" @click="$router.push({name: 'overseas-property', query: {tabId: 0}})">更多</m-button>
         </div>
-        <div class="grid">
+        <div class="grid" v-loading="estate.loading">
           <m-tabs class="tabs" type="button" v-model="estate.tabId">
-            <m-tab-item v-for="(item, index) in estate.citys" :key="item.id" :id="index">{{item.name}}</m-tab-item>
+            <m-tab-item v-for="item in estate.citys" :key="item.id" :id="item.id">{{item.name}}</m-tab-item>
           </m-tabs>
-          <m-card class="card" v-for="item in estate.houses" :key="item.id">
-            <img :src="item.picurl" slot="header" />
+          <div class="none" v-show="!estate.houses.length">暂时没有数据惹~</div>
+          <m-card class="card" v-for="item in estate.houses" :key="item.id" :ishot="item.ishot" @click.native="$router.push({name: 'overseas-house', params: {id: item.planid}})">
+            <div class="header" slot="header">
+              <img :src="item.picurl" />
+            </div>
             <div class="body">
               <div class="title">{{item.title}}</div>
               <div class="value">
@@ -58,15 +61,22 @@
       <div class="container">
         <div class="title">
           <m-title :level="1" en="toutism" cn="旅游&amp;游学" tips="定制旅游，留学自住一站式VIP服务"></m-title>
-          <m-button class="btn" type="plain" size="small">更多</m-button>
+          <m-button class="btn" type="plain" size="small" @click="$router.push({name: 'tour-study'})">更多</m-button>
         </div>
-        <div class="grid">
+        <div class="grid" v-loading="toutism.loading">
           <m-tabs class="tabs" type="button" v-model="toutism.tabId">
-            <m-tab-item :id="1">旅游</m-tab-item>
-            <m-tab-item :id="2">游学</m-tab-item>
+            <m-tab-item v-for="item in toutism.types" :key="item.id" :id="item.id">{{item.name}}</m-tab-item>
           </m-tabs>
-          <m-card class="card" v-for="item in toutism.items" :key="item.id">
-            <img src="static/home/estate.png" />
+          <div class="none" v-show="!toutism.trips.length">暂时没有数据惹~</div>
+          <m-card class="card" v-for="item in toutism.trips" :key="item.id" :ishot="item.ishot" @click.native="$router.push({name: 'tour-study-detail', params: {id: item.id}})">
+            <div class="header" slot="header">
+              <img :src="item.picurl" />
+            </div>
+            <div class="body">
+              <div class="title">{{item.title}}</div>
+              <div class="info">{{item.info}}</div>
+              <div class="tips">机票 / 酒店 / 景点 / 活动 / 路书 / 签证 / 保险 / WiFi，一价全包</div>
+            </div>
           </m-card>
         </div>
       </div>
@@ -75,11 +85,17 @@
       <div class="container">
         <div class="title">
           <m-title :level="1" en="trust fund" cn="信托基金" tips="移民安家，一站式尊贵VIP服务"></m-title>
-          <m-button class="btn" type="plain" size="small">更多</m-button>
+          <m-button class="btn" type="plain" size="small" @click="$router.push({name: 'trust-fund'})">更多</m-button>
         </div>
         <div class="grid">
-          <m-card class="card" v-for="item in trustFund.items" :key="item.id">
-            <img src="static/home/estate.png" />
+          <m-card class="card" v-for="item in trustFund.funds" :key="item.id" :ishot="item.ishot" @click.native="$router.push({name: 'trust-fund-detail', params: {id: item.id}})">
+            <div class="header" slot="header">
+              <img :src="item.picurl" />
+            </div>
+            <div class="body">
+              <div class="name">{{item.fundname}}</div>
+              <div class="intro">{{item.intro}} </div>
+            </div>
           </m-card>
         </div>
       </div>
@@ -90,6 +106,8 @@
 <script>
   import api_other from '@/api/other'
   import api_house from '@/api/house'
+  import api_trip from '@/api/trip'
+  import api_fund from '@/api/fund'
   import mSwiper from '@/components/m-swiper.vue'
 
   export default {
@@ -99,35 +117,16 @@
         estate: {
           tabId: 0,
           citys: [],
-          houses: []
+          houses: [],
+          loading: false
         },
         toutism: {
-          tabId: 1,
-          items: [
-            {
-              id: 1
-            },
-            {
-              id: 2
-            },
-            {
-              id: 3
-            },
-            {
-              id: 4
-            }
-          ]
+          tabId: 0,
+          types: [],
+          trips: []
         },
         trustFund: {
-          items: [{
-            id: 1
-          },
-          {
-            id: 2
-          },
-          {
-            id: 3
-          }]
+          funds: []
         },
         swiper: {
           autoplay: {
@@ -150,29 +149,37 @@
     },
     watch: {
       'estate.tabId': function (val, oldVal) {
-        this.getHouses(this.estate.citys[val].placeid)
+        this.estate.loading = true
+        api_house.getHouses({ placeid: val, num: 6 }).then(houses => {
+          this.estate.houses = houses
+          this.estate.loading = false
+        })
+      },
+      'toutism.tabId': function (val, oldVal) {
+        this.toutism.loading = true
+        api_trip.getTrips({ triptype: val, num: 4 }).then(trips => {
+          this.toutism.trips = trips
+          this.toutism.loading = false
+        })
       }
     },
     components: {
       mSwiper
     },
-    methods: {
-      getHouses(placeid) {
-        api_house.getHouses({ placeid, num: 6 }).then(houses => {
-          this.estate.houses = houses
-        })
-      }
-    },
     beforeMount() {
       api_other.getBannerList().then(banner => {
         this.banner = banner
-        for (let i = 0; i < 3; i++) {
-          this.banner.push(this.banner[0])
-        }
       })
       api_house.getCitys().then(citys => {
         this.estate.citys = citys
-        this.getHouses(citys[0].placeid)
+        this.estate.tabId = citys[0].id
+      })
+      api_trip.getTripType().then(types => {
+        this.toutism.types = types
+        this.toutism.tabId = types[0].id
+      })
+      api_fund.getFunds().then(funds => {
+        this.trustFund.funds = funds
       })
     }
   }
@@ -183,6 +190,7 @@
 
   .home {
     background-color: #f5f5f5;
+    padding-bottom: 80px;
     & > .swiper {
       height: 700px;
     }
@@ -301,23 +309,29 @@
           & > .tabs {
             grid-column: start / end;
           }
+          & > .none {
+            grid-column: start / end;
+          }
           & > .card {
-            & img {
+            cursor: pointer;
+            & .header {
               width: 100%;
             }
             & .body {
               padding: var(--house-padding);
+              box-sizing: border-box;
             }
           }
         }
       }
       &.estate {
-        & img {
+        & .header {
           height: var(--house-img-height);
         }
         & .body {
           transform: scaleX(0.94);
           transform-origin: left center;
+          overflow: hidden;
           & .title {
             font-size: 18px;
             overflow: hidden;
@@ -342,6 +356,43 @@
         background-color: var(--color-white);
         & > .container > .grid {
           grid-template-columns: [start] repeat(2, 1fr) [end];
+        }
+        & .header {
+          height: 285px;
+        }
+        & .body {
+          & > .title {
+            color: var(--color-yellow);
+            font-size: 22px;
+            font-weight: bold;
+          }
+          & > .info {
+            color: var(--font-color-light-2);
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 36px;
+          }
+          & > .tips {
+            color: var(--font-color-light-4);
+            font-size: 14px;
+            margin-top: 15px;
+          }
+        }
+      }
+      &.trustFund {
+        & .header {
+          height: 240px;
+        }
+        & .body {
+          & > .name {
+            color: var(--font-color-light-1);
+            font-size: 20px;
+          }
+          & > .intro {
+            color: var(--font-color-light-4);
+            font-size: 20px;
+            line-height: 36px;
+          }
         }
       }
     }

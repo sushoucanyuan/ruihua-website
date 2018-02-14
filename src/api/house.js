@@ -6,38 +6,53 @@ const instance = axios.create({
 })
 
 export default {
-  getHouseBanners(){
+  getHouseBanners() {
     return instance.get('getHouseBanners').then(({
       data
-    }) => data)  
+    }) => data)
   },
   getCitys() {
     return instance.get('getCitys').then(({
       data
     }) => data)
   },
-  getHousesPage(params) {
-    return instance.get('getHousesPage', params).then(({
+  getHouseCount(params) {
+    return instance.get('getHouseCount', {
+      params
+    }).then(({
       data
-    }) => data)
+    }) => data.count)
   },
   getHouse(params) {
-    return instance.get('getHouse', params).then(({
+    return instance.get('getHouseDetail', {
+      params
+    }).then(({
       data
     }) => data)
   },
   getHouses(params) {
-    return instance.get('getHouses', params).then(({
+    return instance.get('getHouses', {
+      params
+    }).then(({
       data
     }) => data)
   },
   getHotHouses(params) {
-    return instance.get('getHotHouses', params).then(({
+    return instance.get('getHotHouses', {
+      params
+    }).then(({
       data
     }) => data)
   },
   getHouseInfo(params) {
     return instance.get('getHouseInfo', params).then(({
+      data
+    }) => data)
+  },
+  getHouseInfoDetail(params) {
+    return instance.get('getHouseInfoDetail', {
+      params
+    }).then(({
       data
     }) => data)
   }

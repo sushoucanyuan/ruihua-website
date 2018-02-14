@@ -70,7 +70,7 @@
     },
     computed: {
       index: function () {
-        return this.page - 1
+        return (this.page - 1) * this.num
       }
     },
     methods: {
@@ -174,13 +174,6 @@
         margin-bottom: 50px;
         border-bottom: 1px solid var(--color-line);
       }
-      & > .none {
-        color: var(--color-yellow);
-        font-size: 28px;
-        letter-spacing: 5px;
-        text-align: center;
-        padding: 70px 0;
-      }
       & > .card {
         cursor: pointer;
         margin-bottom: 26px;
@@ -202,7 +195,7 @@
             bottom: 4px;
             width: 110px;
             background-color: rgb(228, 83, 64);
-            & > .icon{
+            & > .icon {
               color: var(--color-white);
               width: 33px;
             }

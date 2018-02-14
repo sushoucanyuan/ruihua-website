@@ -90,7 +90,7 @@
       <section class="recommend">
         <m-title class="title" :level="2" cn="瑞华推荐" en="recommend" line></m-title>
         <div class="cards">
-          <m-card class="card" v-for="item in recommend" :key="item.id">
+          <m-card class="card" v-for="item in recommend" :key="item.id" @click.native="recom(item.id)">
             <div class="tips">热门线路</div>
             <div class="header" slot="header">
               <img :src="item.picurl" />
@@ -129,6 +129,12 @@
           case 3: return trip.beforenote
           case 4: return trip.commonquestion
         }
+      }
+    },
+    methods: {
+      recom: function (id) {
+        this.$router.push({ name: 'tour-study-detail', params: { id } })
+        document.body.scrollTop = document.documentElement.scrollTop = 0
       }
     },
     components: {

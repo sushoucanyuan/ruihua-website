@@ -1,8 +1,7 @@
 <template>
-  <m-card class="m-recommend" @click.native="$router.push({name: 'overseas-house', params: {id: item.planid}})">
+  <m-card class="m-recommend" ishot @click.native="route(item.id)">
     <div class="header" slot="header">
       <img :src="item.picurl" />
-      <div class="tips">热门推荐</div>
     </div>
     <div class="body">
       <div class="title">{{item.title}}</div>
@@ -23,6 +22,12 @@
 <script>
   export default {
     props: ['item'],
+    methods: {
+      route: function (id) {
+        this.$router.push({ name: 'overseas-house', params: { id } })
+        document.body.scrollTop = document.documentElement.scrollTop = 0
+      }
+    }
   }
 </script>
 
@@ -32,28 +37,9 @@
   .m-recommend {
     cursor: pointer;
     position: relative;
-    & .tips {
-      color: var(--color-white);
-      font-size: 17px;
-      font-weight: bold;
-      line-height: 45px;
-      text-align: center;
-      letter-spacing: 1px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 120px;
-      background-color: var(--color-orange);
-    }
     & .header {
       height: var(--house-img-height);
       overflow: hidden;
-      & img {
-        width: 100%;
-        height: 100%;
-        display: block;
-        transition: var(--house-img-transition);
-      }
     }
     & .body {
       position: relative;
@@ -97,9 +83,6 @@
           margin-right: 4px;
         }
       }
-    }
-    &:hover .header img {
-      transform: var(--house-img-transform);
     }
   }
 </style>

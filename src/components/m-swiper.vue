@@ -1,7 +1,7 @@
 <template>
   <swiper class="m-swiper" :options="swiper" :class="'type-' + type">
     <swiper-slide v-for="(item, index) in list" :key="index">
-      <img class="banner" :src="item.picurl">
+      <img class="banner" :src="item.picurl" @click="click(item.url)">
     </swiper-slide>
     <div class="swiper-pagination" slot="pagination"></div>
     <div class="banner-button-prev" slot="button-prev">
@@ -46,6 +46,15 @@
           }
         }
       }
+    },
+    methods: {
+      click: function (url) {
+        if (!url) return false
+        if (!url.match(/^http/)) {
+          url = 'http://' + url
+        }
+        location.href = url
+      }
     }
   }
 </script>
@@ -71,14 +80,15 @@
         height: 60px;
         margin: auto;
         padding: 12px;
-        border: 2px solid;
+        border: 3px solid;
         border-radius: 50%;
+        background-color: color(var(--color-white) a(20%));
         transition: 0.3s;
         &:hover {
           transform: scale(1.1);
         }
         &.swiper-button-disabled {
-          color: color(var(--color-yellow) a(50%));
+          opacity: 0.5;
         }
       }
       & .banner-button-prev {
@@ -95,7 +105,7 @@
         height: 24px;
         margin: 0 38px 66px;
         background-color: transparent;
-        box-shadow: 0 0 0 5px var(--color-yellow);
+        box-shadow: 0 0 0 5px var(--color-white);
         transition: var(--transition-time);
         &::before {
           content: "";
@@ -107,7 +117,7 @@
           width: 16px;
           height: 16px;
           margin: auto;
-          background: var(--color-yellow);
+          background: var(--color-white);
           border-radius: 50%;
           transform: scale(0);
           transition: var(--transition-time);
@@ -116,7 +126,7 @@
           transform: scale(1);
         }
         &.swiper-pagination-bullet-active {
-          box-shadow: 0 0 0 7px color(var(--color-yellow) a(80%));
+          box-shadow: 0 0 0 7px color(var(--color-white) a(60%));
           &::before {
             transform: scale(1);
           }

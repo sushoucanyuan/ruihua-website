@@ -28,6 +28,29 @@
     text-overflow: ellipsis;
   }
 
+  .none {
+    color: var(--color-yellow);
+    font-size: 28px;
+    letter-spacing: 5px;
+    text-align: center;
+    padding: 80px 0;
+  }
+
+  .page {
+    font-size: 14px;
+    line-height: 30px;
+    letter-spacing: 1px;
+  }
+
+  .el-pagination.is-background .el-pager li {
+    &.active {
+      background-color: var(--color-yellow);
+    }
+    &:not(.active):hover {
+      color: var(--color-yellow);
+    }
+  }
+
   #app {
     font-family: "Open Sans", "Helvetica Neue", Arial, "Hiragino Sans GB",
       "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;

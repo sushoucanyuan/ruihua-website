@@ -7,8 +7,8 @@
       <slot v-else></slot>
       <span v-show="!$slots.default" class="m-tabs-loading">努力加载中 ...</span>
     </div>
-    <m-icon v-if="nav" class="prev" :class="{'is-disabled': !can_prev}" name="xiangzuo" @click.native="prev"></m-icon>
-    <m-icon v-if="nav" class="next" :class="{'is-disabled': !can_next}" name="xiangyou" @click.native="next"></m-icon>
+    <!-- <m-icon v-if="nav" class="prev" :class="{'is-disabled': !can_prev}" name="xiangzuo" @click.native="prev"></m-icon>
+    <m-icon v-if="nav" class="next" :class="{'is-disabled': !can_next}" name="xiangyou" @click.native="next"></m-icon> -->
   </div>
 </template>
 

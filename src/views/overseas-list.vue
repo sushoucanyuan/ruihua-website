@@ -7,31 +7,22 @@
         <m-tabs class="tabs" v-model="tabId">
           <template v-if="citys.length">
             <m-tab-item :id="0">全部</m-tab-item>
-            <m-tab-item v-for="(item, index) in citys" :key="item.id" :id="index + 1">{{item.name}}</m-tab-item>
+            <m-tab-item v-for="item in citys" :key="item.id" :id="item.id">{{item.name}}</m-tab-item>
           </template>
         </m-tabs>
-        <section class="ruihua-recommend">
+        <section class="ruihua-recommend" v-loading="recom_loading">
           <m-title class="title ellipsis" :level="2" cn="瑞华推荐" en="recommend"></m-title>
+          <div class="none" v-show="!recommend.length">暂时没有数据惹~</div>
           <m-recommend v-for="item in recommend" :key="item.planid" :item="item"></m-recommend>
         </section>
         <section class="info">
           <div class="house-info">
             <m-title class="title" :level="3" cn="房源信息"></m-title>
-            <div class="tool">
-              <m-tabs type="text" v-model="type">
-                <m-tab-item :id="0">默认排序</m-tab-item>
-                <m-tab-item :id="1">总价</m-tab-item>
-              </m-tabs>
-              <div class="sort">
-                <transition name="sort" mode="out-in">
-                  <m-icon class="icon" v-if="sortway" :key="1" name="paixu-shengxu" @click.native="sortway = 0"></m-icon>
-                  <m-icon class="icon" v-else :key="0" name="paixu-jiangxu" @click.native="sortway = 1"></m-icon>
-                </transition>
-              </div>
-            </div>
+            <m-tool :types="['推荐', '时间', '价格']" :typeId.sync="type" :sortway.sync="sortway"></m-tool>
           </div>
-          <div class="house-cards">
-            <m-card class="card" v-for="item in houses" :key="item.planid" direction="row">
+          <div class="house-cards" v-loading="house_loading">
+            <div class="none" v-show="!houses.length">暂时没有数据惹~</div>
+            <m-card class="card" v-for="item in houses" :key="item.planid" direction="row" :ishot="item.ishot">
               <div class="header" slot="header">
                 <img :src="item.picurl" />
               </div>
@@ -63,17 +54,12 @@
                 </div>
               </div>
             </m-card>
-            <el-pagination class="pagination" layout="prev, pager, next, jumper" :page-count="count" :page-size="size" :current-page.sync="page" background></el-pagination>
+            <el-pagination class="pagination" layout="prev, pager, next, jumper" :total="count" :page-size="size" :current-page.sync="page" background></el-pagination>
           </div>
           <m-title class="recommend-info" :level="2" cn="瑞华房产资讯" en="information"></m-title>
           <div class="recommend-card">
             <m-card class="card">
-              <div class="info" v-for="item in info" :key="item.id" @click="$router.push({name: 'overseas-info', params: {id: item.id}})">
-                <div class="title ellipsis">{{item.title}}</div>
-                <div class="publishAt">
-                  {{item.publishAt}}
-                </div>
-              </div>
+              <m-info class="info" v-for="item in info" :key="item.id" :info="item"></m-info>
             </m-card>
           </div>
         </section>
@@ -86,6 +72,8 @@
   import api from '@/api/house'
   import mRecommend from '@/components/m-recommend.vue'
   import mSwiper from '@/components/m-swiper.vue'
+  import mTool from '@/components/m-tool.vue'
+  import mInfo from '@/components/m-info.vue'
 
   export default {
     data() {
@@ -94,8 +82,10 @@
         tabId: this.$route.query.tabId,
         citys: [],
         recommend: [],
+        recom_loading: true,
         info: [],
         houses: [],
+        house_loading: true,
         count: 1,
         size: 10,
         page: 1,
@@ -104,13 +94,8 @@
       }
     },
     computed: {
-      placeid: function () {
-        if (this.tabId > 0 && this.citys.length) {
-          return this.citys[this.tabId - 1].placeid
-        }
-        else {
-          return null
-        }
+      index: function () {
+        return (this.page - 1) * this.size
       }
     },
     watch: {
@@ -120,28 +105,27 @@
       '$route.query.tabId': function (val, oldVal) {
         let placeid = this.placeid
         if (val != undefined) {
-          this.tabId = val
-          this.getHouses({ placeid })
-          if (this.page != 1) {
+          if (this.index) {
             this.page = 1
           }
           else {
-            this.getHouses({ placeid })
+            this.getHouses()
           }
-          this.getHotHouses({ placeid })
+          this.getHouseCount()
+          this.getHotHouses()
         }
         else {
           this.replace(oldVal)
         }
       },
       page: function (val, oldVal) {
-        this.getHouses({ index: val, placeid: this.placeid })
+        this.getHouses()
       },
       type: function (val, oldVal) {
-        this.getHouses({ type: val, placeid: this.placeid })
+        this.getHouses()
       },
       sortway: function (val, oldVal) {
-        this.getHouses({ sortway: val, placeid: this.placeid })
+        this.getHouses()
       }
     },
     methods: {
@@ -152,47 +136,49 @@
           this.$router.replace({ name, query: { tabId } })
         }
       },
-      getHouses({ index = this.page, type = this.type, sortway = this.sortway, placeid }) {
-        let num = this.size
-        if (placeid != undefined) {
-          api.getHouses({ num, type, sortway, placeid }).then(houses => {
-            this.houses = houses
-          })
+      getHouses() {
+        this.house_loading = true
+        let params = {
+          index: this.index,
+          type: this.type,
+          sortway: this.sortway
         }
-        else {
-          api.getHouses({ num, type, sortway }).then(houses => {
-            this.houses = houses
-          })
+        if (this.tabId != 0) {
+          params.placeid = this.tabId
         }
+        api.getHouses(params).then(houses => {
+          this.houses = houses
+          this.house_loading = false
+        })
       },
-      getHotHouses({ placeid }) {
-        if (placeid != undefined) {
-          api.getHotHouses({ placeid, num: 3 }).then(recommend => {
-            this.recommend = recommend
-          })
+      getHotHouses() {
+        this.recom_loading = true
+        let params = {
+          num: 3
         }
-        else {
-          api.getHotHouses({ num: 3 }).then(recommend => {
-            this.recommend = recommend
-          })
+        if (this.tabId != 0) {
+          params.placeid = this.tabId
         }
+        api.getHotHouses(params).then(recommend => {
+          this.recommend = recommend
+          this.recom_loading = false
+        })
       },
-      getHousesPage({ placeid }) {
-        if (placeid != undefined) {
-          api.getHousesPage({ placeid }).then(count => {
-            this.count = count
-          })
+      getHouseCount() {
+        let params = {}
+        if (this.tabId != 0) {
+          params.placeid = this.tabId
         }
-        else {
-          api.getHousesPage().then(count => {
-            this.count = count
-          })
-        }
+        api.getHouseCount(params).then(count => {
+          this.count = count
+        })
       }
     },
     components: {
       mRecommend,
-      mSwiper
+      mSwiper,
+      mTool,
+      mInfo
     },
     beforeMount() {
       api.getHouseBanners().then(banner => {
@@ -200,10 +186,9 @@
       })
       api.getCitys().then(citys => {
         this.citys = citys
-        let placeid = this.placeid
-        this.getHouses({ placeid })
-        this.getHotHouses({ placeid })
-        this.getHousesPage({ placeid })
+        this.getHouses()
+        this.getHotHouses()
+        this.getHouseCount()
       })
       api.getHouseInfo({ num: 7 }).then(info => {
         this.info = info
@@ -227,8 +212,9 @@
   @import "../assets/css/var.css";
 
   .overseas {
+    padding-bottom: 120px;
     & > .swiper {
-      height: 560px;
+      height: 700px;
     }
     & > .estate {
       width: var(--index-width);
@@ -240,7 +226,6 @@
         grid-template-columns: [start] repeat(3, 1fr) [end];
         & > .tabs {
           grid-column: start / end;
-          background-color: var(--color-white);
         }
         & > .ruihua-recommend {
           grid-column: start / end;
@@ -248,7 +233,7 @@
           grid-gap: var(--grid-gap);
           grid-template-columns: [start] repeat(3, 1fr) [end];
           margin-bottom: 20px;
-          & > .title {
+          & > :matches(.title, .none) {
             grid-column: start / end;
           }
         }
@@ -387,47 +372,8 @@
             align-items: start;
             & > .card {
               padding: 15px 10px 30px 22px;
-              & .info {
-                cursor: pointer;
-                position: relative;
-                margin: 26px 0;
-                &::after {
-                  content: "";
-                  position: absolute;
-                  bottom: 0;
-                  left: 4px;
-                  width: 93%;
-                  height: 1px;
-                  background-color: color(var(--color-border) a(0.4));
-                }
-                & .title {
-                  font-size: 16px;
-                  font-weight: bold;
-                  letter-spacing: 1px;
-                  display: flex;
-                  align-items: center;
-                  transform: scaleX(0.98);
-                  transform-origin: left center;
-                  transition: 0.1s;
-                  &::before {
-                    content: "";
-                    display: inline-block;
-                    width: 7px;
-                    height: 7px;
-                    margin: 4px;
-                    background-color: var(--color-yellow);
-                    border-radius: 50%;
-                  }
-                }
-                & .publishAt {
-                  color: var(--font-color-light-4);
-                  font-size: 12px;
-                  line-height: 36px;
-                  padding-left: 22px;
-                }
-                &:hover .title {
-                  color: var(--color-yellow);
-                }
+              &.title{
+                width: 340px;
               }
             }
           }

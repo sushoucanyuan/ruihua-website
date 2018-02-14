@@ -31,7 +31,7 @@
     },
     computed: {
       index: function () {
-        return this.page - 1
+        return (this.page - 1) * this.num
       }
     },
     watch: {

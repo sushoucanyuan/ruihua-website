@@ -1,10 +1,10 @@
 <template>
   <div class="index">
-    <side-tool></side-tool>
+    <!-- <side-tool></side-tool> -->
     <index-header></index-header>
     <main>
       <keep-alive :exclude="['overseas-house', 'overseas-info', 'tour-study-detail', 'trust-fund-detail']">
-        <router-view/>
+        <router-view :key="$route.path.replace(/\//g, '_')"/>
       </keep-alive>
     </main>
     <index-footer></index-footer>

@@ -6,6 +6,12 @@ import router from './router'
 import '@/assets/fonts/font.css'
 import '@/assets/icons/iconfont'
 
+import moment from 'moment'
+
+moment.locale('zh-cn')
+
+window.moment = moment
+
 //import 基础组件
 import mIcon from '@/components/m-icon.vue'
 import mCard from '@/components/m-card.vue'
