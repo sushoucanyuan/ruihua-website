@@ -84,11 +84,12 @@
         border-radius: 50%;
         background-color: color(var(--color-white) a(20%));
         transition: 0.3s;
-        &:hover {
+        &:not(.swiper-button-disabled):hover {
           transform: scale(1.1);
         }
         &.swiper-button-disabled {
           opacity: 0.5;
+          cursor: not-allowed;
         }
       }
       & .banner-button-prev {

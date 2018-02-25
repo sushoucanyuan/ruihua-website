@@ -43,5 +43,10 @@ export default {
     }).then(({
       data
     }) => data)
+  },
+  addTripForm(params) {
+    return instance.post('addTripForm', params).then(({
+      data
+    }) => data)
   }
 }

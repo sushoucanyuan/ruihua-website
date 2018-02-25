@@ -13,9 +13,28 @@
           <div class="other">
             <span>作者：{{info.author || '佚名' }}</span>
             <span>来源：{{info.source || '未知'}}</span>
-            <span>时间：{{info.publishAt}}</span>
+            <span>时间：{{info.publishAt | format}}</span>
           </div>
-          <div class="page" v-html="info.content || '暂无数据~'"></div>
+          <div class="m-page" v-html="info.content || '暂无数据~'"></div>
+          <div class="btn-container">
+            <m-button class="btn">
+              <m-icon class="icon" name="fenxiang"></m-icon>&nbsp;分享给朋友
+            </m-button>
+            <ul class="share-box">
+              <li class="share-icon" @click="weixin">
+                <m-icon name="pengyouquan"></m-icon>
+              </li>
+              <li class="share-icon" @click="weibo">
+                <m-icon name="weibo"></m-icon>
+              </li>
+              <li class="share-icon" @click="qq">
+                <m-icon name="qq"></m-icon>
+              </li>
+              <li class="share-icon" @click="weixin">
+                <m-icon name="weixin"></m-icon>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="recommand">
           <m-title class="title" level="2" en="recommend" cn="瑞华推荐"></m-title>
@@ -29,13 +48,18 @@
         </div>
       </section>
     </div>
+
+    <el-dialog class="dialog" title="快打开微信扫码分享吧" :visible.sync="dialogVisible" width="300px">
+      <div class="qrcode" v-loading="qrcode.loading"><img :src="qrcode.url"></div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
   import api from '@/api/house'
-  import mRecommend from '@/components/m-recommend.vue'
+  import api_other from '@/api/other'
   import mInfo from '@/components/m-info.vue'
+  import mRecommend from '@/components/m-recommend.vue'
 
   export default {
     name: 'overseas-info',
@@ -44,7 +68,48 @@
       return {
         info: {},
         recommend: [],
-        recomInfo: []
+        recomInfo: [],
+        qrcode: {
+          url: null,
+          loading: true
+        },
+        dialogVisible: false
+      }
+    },
+    filters: {
+      format: function (time) {
+        return moment.unix(time).format('YYYY-MM-DD HH:mm:ss')
+      }
+    },
+    methods: {
+      weibo: function () {
+
+      },
+      qq: function () {
+        let info = this.info
+        let p = {
+          url: location.href, /*获取URL，可加上来自分享到QQ标识，方便统计*/
+          desc: '我是渣渣辉，一起来玩贪玩蓝月！', /*分享理由(风格应模拟用户对话),支持多分享语随机展现（使用|分隔）*/
+          title: info.title, /*分享标题(可选)*/
+          summary: info.info, /*分享摘要(可选)*/
+          // pics: '', /*分享图片(可选)*/
+          style: '201',
+          width: 32,
+          height: 32
+        }
+        let s = []
+        for (let i in p) {
+          s.push(i + '=' + encodeURIComponent(p[i] || ''))
+        }
+        window.open(`http://connect.qq.com/widget/shareqq/index.html?${s.join('&')}`)        
+      },
+      weixin: function () {
+        this.dialogVisible = true
+        this.qrcode.loading = true
+        api_other.getQrcode({ content: location.href }).then(url => {
+          this.qrcode.url = url
+          this.qrcode.loading = false
+        })
       }
     },
     components: {
@@ -89,6 +154,7 @@
         & > .page {
           grid-area: page;
           height: 600px;
+          bottom: 1px solid color(--color-border);
           & > .title {
             color: var(--font-color-light-2);
             font-size: 24px;
@@ -101,9 +167,85 @@
             line-height: 30px;
             padding-bottom: 20px;
             margin-bottom: 30px;
-            border-bottom: 1px solid var(--color-border);
             & > span {
               margin-right: 36px;
+            }
+          }
+          & > .m-page {
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 80px;
+            margin-bottom: 55px;
+          }
+          & > .btn-container {
+            text-align: center;
+            margin-bottom: 100px;
+            position: relative;
+            & > .btn {
+              font-size: 18px;
+              font-weight: bold;
+              display: inline-flex;
+              align-content: center;
+              justify-content: center;
+              height: 66px;
+              border-radius: 0%;
+              &:focus + .share-box {
+                transform: scale(1);
+              }
+            }
+            & > .share-box {
+              cursor: pointer;
+              color: var(--color-white);
+              text-align: center;
+              position: absolute;
+              left: 0;
+              right: 0;
+              top: calc(100% + 30px);
+              display: flex;
+              align-items: center;
+              box-sizing: border-box;
+              width: 210px;
+              height: 56px;
+              margin: auto;
+              padding: 0 4px;
+              background-color: var(--color-yellow);
+              transition: 0.4s;
+              transform: scale(0);
+              transform-origin: top center;
+              &:hover {
+                transform: scale(1);
+              }
+              &::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 100%;
+                width: 0px;
+                height: 0px;
+                margin: auto;
+                border: solid 12px;
+                border-bottom-color: var(--color-yellow);
+              }
+              & > .share-icon {
+                font-size: 18px;
+                position: relative;
+                width: 52px;
+                transition: 0.2s;
+                &:not(:last-child)::after {
+                  content: "";
+                  position: absolute;
+                  right: 0;
+                  top: 0;
+                  bottom: 0;
+                  width: 1px;
+                  height: 13px;
+                  margin: auto 0;
+                  background-color: color(var(--color-white) a(0.3));
+                }
+                &:hover {
+                  transform: translateY(2px);
+                }
+              }
             }
           }
         }
@@ -126,6 +268,13 @@
             }
           }
         }
+      }
+    }
+    & > .dialog .qrcode {
+      text-align: center;
+      & > img {
+        width: 180px;
+        height: 180px;
       }
     }
   }

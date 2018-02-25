@@ -67,7 +67,7 @@
 
   aside {
     position: fixed;
-    right: 10px;
+    right: 5px;
     bottom: 40px;
     z-index: 100;
     box-sizing: border-box;

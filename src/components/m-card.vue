@@ -1,10 +1,10 @@
 <template>
   <div class="m-card" :class="{'direction-row': direction == 'row'}">
-    <div class="m-card-header">
+    <div class="m-card-header" :class="{notZoom}">
       <slot name="header"></slot>
       <div class="m-card-hot" v-show="ishot">
         <m-icon class="icon" name="huo"></m-icon>
-        <span>VIP热门推荐</span>
+        <span>热门推荐</span>
       </div>
     </div>
     <div v-if="$slots.default" class="m-card-body">
@@ -23,7 +23,8 @@
         type: String,
         default: 'column'
       },
-      ishot: Boolean
+      ishot: Boolean,
+      notZoom: Boolean
     },
     components: {
       mIcon
@@ -80,7 +81,7 @@
         transition: var(--house-img-transition);
       }
     }
-    &:hover > .m-card-header img {
+    &:hover > .m-card-header:not(.notZoom) img {
       transform: var(--house-img-transform);
     }
   }

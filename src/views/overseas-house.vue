@@ -5,13 +5,11 @@
       <m-breadcrumb separator=">">
         <m-breadcrumb-item :to="{name: 'home'}">瑞华网</m-breadcrumb-item>
         <m-breadcrumb-item :to="{name: 'overseas-property'}">海外房产</m-breadcrumb-item>
-        <m-breadcrumb-item :to="{name: 'overseas-property', query: {tabId: house.city}}">墨尔本</m-breadcrumb-item>
+        <m-breadcrumb-item :to="{name: 'overseas-property', query: {tabId: house.city}}">{{house.cityname}}</m-breadcrumb-item>
         <m-breadcrumb-item>{{house.planname}}</m-breadcrumb-item>
       </m-breadcrumb>
-      <m-card class="house" direction="row">
-        <div class="header" slot="header">
-          <img src="/static/estate/house.png">
-        </div>
+      <m-card class="house" direction="row" notZoom>
+        <m-swiper-thumbnail class="swiper" slot="header" :list="house.planbanners"></m-swiper-thumbnail>
         <div class="body">
           <div class="value">
             <div>总价：
@@ -45,7 +43,7 @@
             </div>
           </div>
           <div class="btns">
-            <m-button class="btn" size="large">预约购房</m-button>
+            <m-button class="btn" size="large" @click.native="buy">预约购房</m-button>
             <m-button class="btn" size="large">
               <m-icon class="icon" name="dianhua"></m-icon>&nbsp;&nbsp;
               <span class="number">733-423-297</span>
@@ -97,13 +95,16 @@
       <div class="recommend">
         <m-recommend v-for="item in recommend" :key="item.planid" :item="item"></m-recommend>
       </div>
+      <m-form :visible.sync="visible" type="house" title="欢迎预约购房" :info="house.planname" @post="post"></m-form>
     </div>
   </div>
 </template>
 
 <script>
   import api from '@/api/house'
+  import mForm from '@/components/m-form.vue'
   import mRecommend from '@/components/m-recommend.vue'
+  import mSwiperThumbnail from '@/components/m-swiper-thumbnail.vue'
 
   export default {
     name: 'overseas-house',
@@ -111,16 +112,33 @@
     data() {
       return {
         house: {},
-        recommend: []
+        recommend: [],
+        visible: false
       }
     },
     methods: {
-      init() {
-
+      buy: function () {
+        this.visible = true
+      },
+      post: function (params) {
+        Object.assign(params, {
+          id: this.house.id
+        })
+        api.addHousPlanForm(params).then(data => {
+          if (data.code == 0) {
+            this.$message.success('提交成功！')
+            this.visible = false
+          }
+          else {
+            this.$message.error(data.msg);
+          }
+        })
       }
     },
     components: {
-      mRecommend
+      mForm,
+      mRecommend,
+      mSwiperThumbnail
     },
     beforeMount() {
       api.getHouse({ id: this.id }).then(house => {
@@ -147,22 +165,16 @@
       margin: 0 auto;
       padding-top: var(--index-padding-top);
       & > .house {
-        & .header {
+        & .swiper {
           width: 635px;
           height: 430px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          & > img {
-            width: 100%;
-            height: 100%;
-          }
         }
         & .body {
           padding: 25px 30px 0 50px;
           & > .value {
             color: var(--font-color-light-1);
             font-size: 16px;
+            white-space: nowrap;
             padding-bottom: 10px;
             border-bottom: 1px dashed var(--color-border);
             & .number {

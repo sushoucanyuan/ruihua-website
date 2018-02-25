@@ -39,7 +39,7 @@
           <m-tabs class="tabs" type="button" v-model="estate.tabId">
             <m-tab-item v-for="item in estate.citys" :key="item.id" :id="item.id">{{item.name}}</m-tab-item>
           </m-tabs>
-          <div class="none" v-show="!estate.houses.length">暂时没有数据惹~</div>
+          <div class="none" v-if="estate.citys.length" v-show="!estate.houses.length">暂时没有数据惹~</div>
           <m-card class="card" v-for="item in estate.houses" :key="item.id" :ishot="item.ishot" @click.native="$router.push({name: 'overseas-house', params: {id: item.planid}})">
             <div class="header" slot="header">
               <img :src="item.picurl" />
@@ -88,11 +88,12 @@
           <m-button class="btn" type="plain" size="small" @click="$router.push({name: 'trust-fund'})">更多</m-button>
         </div>
         <div class="grid">
-          <m-card class="card" v-for="item in trustFund.funds" :key="item.id" :ishot="item.ishot" @click.native="$router.push({name: 'trust-fund-detail', params: {id: item.id}})">
+          <m-card class="card" v-for="item in trustFund.funds" :key="item.id" :ishot="item.ishot" @click.native="$router.push({name: 'trust-fund-detail', params: {id: item.id}})" notZoom>
             <div class="header" slot="header">
-              <img :src="item.picurl" />
+              <img :src="item.picurl1" />
             </div>
             <div class="body">
+              <div class="line"></div>
               <div class="name">{{item.fundname}}</div>
               <div class="intro">{{item.intro}} </div>
             </div>
@@ -123,7 +124,8 @@
         toutism: {
           tabId: 0,
           types: [],
-          trips: []
+          trips: [],
+          loading: false
         },
         trustFund: {
           funds: []
@@ -191,9 +193,6 @@
   .home {
     background-color: #f5f5f5;
     padding-bottom: 80px;
-    & > .swiper {
-      height: 700px;
-    }
     & > .about {
       display: flex;
       & > div {
@@ -384,14 +383,22 @@
           height: 240px;
         }
         & .body {
+          & > .line {
+            width: 28px;
+            height: 3px;
+            background-color: var(--color-yellow);
+            margin: 16px 0 22px;
+          }
           & > .name {
             color: var(--font-color-light-1);
             font-size: 20px;
+            margin-bottom: 5px;
           }
           & > .intro {
             color: var(--font-color-light-4);
             font-size: 20px;
-            line-height: 36px;
+            line-height: 25px;
+            margin-bottom: 20px;
           }
         }
       }

@@ -8,7 +8,7 @@
         <m-breadcrumb-item>{{trip.title}}</m-breadcrumb-item>
       </m-breadcrumb>
       <div class="info">
-        <m-card class="detail" direction="row">
+        <m-card class="detail" direction="row" notZoom>
           <m-swiper-thumbnail class="swiper" slot="header" :list="trip.managebanners"></m-swiper-thumbnail>
           <div class="body">
             <div class="title">{{trip.title}}</div>
@@ -41,7 +41,7 @@
               </div>
             </div>
             <div class="btns">
-              <m-button class="btn" size="large">马上预定</m-button>
+              <m-button class="btn" size="large" @click.native="buy">马上预定</m-button>
               <m-button class="btn" size="large">
                 <m-icon class="icon" name="dianhua"></m-icon>
                 <span class="number">733-423-297</span>
@@ -73,8 +73,9 @@
               <div class="title">{{trip.lighttitle3}}</div>
               <div class="content">{{trip.lightcontent3}}</div>
             </div>
-            <div>
+            <div v-if="trip.lightinfo">
               <img :src="trip.lightpicurl">
+              <div class="lightinfo">{{trip.lightinfo}}</div>
             </div>
           </div>
         </div>
@@ -102,11 +103,13 @@
       </section>
     </div>
     <tour-study-footer></tour-study-footer>
+    <m-form :visible.sync="visible" type="tour" title="欢迎预约线路" :info="trip.title" @post="post"></m-form>
   </div>
 </template>
 
 <script>
   import api from '@/api/trip'
+  import mForm from '@/components/m-form.vue'
   import mSwiperThumbnail from '@/components/m-swiper-thumbnail.vue'
   import tourStudyFooter from '@/views/tour-study-footer.vue'
 
@@ -116,7 +119,8 @@
       return {
         trip: {},
         tripId: 0,
-        recommend: []
+        recommend: [],
+        visible: false
       }
     },
     computed: {
@@ -135,9 +139,27 @@
       recom: function (id) {
         this.$router.push({ name: 'tour-study-detail', params: { id } })
         document.body.scrollTop = document.documentElement.scrollTop = 0
+      },
+      buy: function () {
+        this.visible = true
+      },
+      post: function (params) {
+        Object.assign(params, {
+          id: this.trip.id
+        })
+        api.addTripForm(params).then(data => {
+          if (data.code == 0) {
+            this.$message.success('提交成功！')
+            this.visible = false
+          }
+          else {
+            this.$message.error(data.msg);
+          }
+        })
       }
     },
     components: {
+      mForm,
       mSwiperThumbnail,
       tourStudyFooter
     },
@@ -288,8 +310,23 @@
               }
             }
             & > :last-child {
+              position: relative;
               grid-row: start / end;
               grid-column: 4 / end;
+              & > .lightinfo {
+                color: var(--color-white);
+                font-size: 14px;
+                line-height: 22px;
+                letter-spacing: 2px;
+                position: absolute;
+                right: 28px;
+                bottom: 36px;
+                box-sizing: border-box;
+                width: 360px;
+                min-height: 240px;
+                padding: 40px 62px;
+                background-color: color(black a(50%));
+              }
             }
           }
         }

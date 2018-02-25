@@ -15,7 +15,7 @@
   import sideTool from '@/views/side-tool.vue'
   import indexHeader from '@/views/index-header.vue'
   import indexFooter from '@/views/index-footer.vue'
-  
+
   export default {
     components: {
       sideTool,

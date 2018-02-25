@@ -5,10 +5,10 @@
         <img v-if="picurl" :src="picurl">
       </transition>
     </section>
-    <section class="fund">
+    <section ref="info" class="fund">
       <m-title :level="1" cn="信托基金" en="trust fund" tips="您的职能财富管家"></m-title>
       <div class="container" v-loading="loading">
-        <img v-for="item in funds" :key="item.id" :src="item.picurl1" @click="$router.push({name: 'trust-fund-detail', params:{id: item.id}})">
+        <img v-for="item in funds" :key="item.id" :src="item.picurl" @click="$router.push({name: 'trust-fund-detail', params:{id: item.id}})">
         <el-pagination class="pagination" layout="prev, pager, next, jumper" :total="count" :page-size="num" @current-change="page => this.page = page" background></el-pagination>
       </div>
     </section>
@@ -17,6 +17,7 @@
 
 <script>
   import api from '@/api/fund'
+  import scrollTo from '@/mixins/scrollTo'
 
   export default {
     data() {
@@ -37,6 +38,8 @@
     watch: {
       page: function () {
         this.getFunds()
+        let top = this.$refs.info.getBoundingClientRect().top
+        if (top < 0) this.scrollTo(top)
       }
     },
     methods: {

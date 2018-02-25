@@ -15,7 +15,7 @@
           <div class="none" v-show="!recommend.length">暂时没有数据惹~</div>
           <m-recommend v-for="item in recommend" :key="item.planid" :item="item"></m-recommend>
         </section>
-        <section class="info">
+        <section class="info" ref="info">
           <div class="house-info">
             <m-title class="title" :level="3" cn="房源信息"></m-title>
             <m-tool :types="['推荐', '时间', '价格']" :typeId.sync="type" :sortway.sync="sortway"></m-tool>
@@ -70,12 +70,14 @@
 
 <script>
   import api from '@/api/house'
+  import scrollTo from '@/mixins/scrollTo'
   import mRecommend from '@/components/m-recommend.vue'
   import mSwiper from '@/components/m-swiper.vue'
   import mTool from '@/components/m-tool.vue'
   import mInfo from '@/components/m-info.vue'
 
   export default {
+    mixins: [scrollTo],
     data() {
       return {
         banner: [],
@@ -103,6 +105,7 @@
         this.replace(val)
       },
       '$route.query.tabId': function (val, oldVal) {
+        this.tabId = val
         let placeid = this.placeid
         if (val != undefined) {
           if (this.index) {
@@ -120,6 +123,8 @@
       },
       page: function (val, oldVal) {
         this.getHouses()
+        let top = this.$refs.info.getBoundingClientRect().top
+        if (top < 0) this.scrollTo(top)
       },
       type: function (val, oldVal) {
         this.getHouses()
@@ -279,12 +284,6 @@
                 width: 359px;
                 height: var(--house-img-height);
                 overflow: hidden;
-                & img {
-                  display: block;
-                  width: 100%;
-                  height: 100%;
-                  transition: var(--house-img-transition);
-                }
               }
               & .body {
                 padding: var(--house-padding);
@@ -372,7 +371,7 @@
             align-items: start;
             & > .card {
               padding: 15px 10px 30px 22px;
-              &.title{
+              &.title {
                 width: 340px;
               }
             }

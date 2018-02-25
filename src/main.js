@@ -24,13 +24,16 @@ import mBreadcrumb from '@/components/m-breadcrumb.vue'
 import mBreadcrumbItem from '@/components/m-breadcrumb-item.vue'
 
 import {
+  Dialog,
   Loading,
+  Message,
   Pagination
 } from 'element-ui'
 
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 
+Vue.use(Dialog)
 Vue.use(Loading)
 Vue.use(Pagination)
 Vue.use(VueAwesomeSwiper, /* { default global options } */ )
@@ -44,6 +47,8 @@ Vue.component(mTabs.name, mTabs)
 Vue.component(mTabItem.name, mTabItem)
 Vue.component(mBreadcrumb.name, mBreadcrumb)
 Vue.component(mBreadcrumbItem.name, mBreadcrumbItem)
+
+Vue.prototype.$message = Message
 
 Vue.config.productionTip = false
 

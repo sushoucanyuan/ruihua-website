@@ -202,19 +202,21 @@
     &.type-img {
       overflow: hidden;
       & > .m-tabs-container {
-        width: 470px;
+        line-height: 60px;
+        text-align: center;
+        width: 460px;
         margin: 0 auto;
         overflow: hidden;
         & > div {
-          vertical-align: bottom;
           display: flex;
+          vertical-align: bottom;
           transition: 0.5s;
           & > .m-tab-item {
             cursor: pointer;
             position: relative;
             display: inline-block;
-            width: 90px;
-            height: 65px;
+            width: 85px;
+            height: 60px;
             background-repeat: no-repeat;
             background-size: 100% 100%;
             &::before {
@@ -229,8 +231,8 @@
               border: 1px solid transparent;
               transition: 0.3s;
             }
-            &:not(:last-child){
-              margin-right: 12px;
+            &:not(:last-child) {
+              margin-right: 10px;
             }
             &.is-active {
               &::before {

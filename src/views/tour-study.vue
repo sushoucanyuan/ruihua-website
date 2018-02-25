@@ -11,7 +11,7 @@
         <m-tab-item v-for="(item, index) in types" :key="index" :id="item.id">{{item.name}}</m-tab-item>
       </template>
     </m-tabs>
-    <section class="list" v-loading="loading">
+    <section ref="info" class="list" v-loading="loading">
       <div class="title">
         <m-title class="recommend-info" :level="2" cn="线路推荐" tips="最权威、最专业的移民讲座"></m-title>
         <m-tool :types="['推荐', '时间', '价格']" :typeId.sync="type" :sortway.sync="sortway"></m-tool>
@@ -50,10 +50,12 @@
 
 <script>
   import api from '@/api/trip'
+  import scrollTo from '@/mixins/scrollTo'
   import mTool from '@/components/m-tool.vue'
   import tourStudyFooter from '@/views/tour-study-footer.vue'
 
   export default {
+    mixins: [scrollTo],
     data() {
       return {
         picurl: '',
@@ -121,6 +123,8 @@
       },
       page: function () {
         this.getTrips()
+        let top = this.$refs.info.getBoundingClientRect().top
+        if (top < 0) this.scrollTo(top)
       }
     },
     components: {

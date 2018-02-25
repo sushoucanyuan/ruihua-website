@@ -12,11 +12,11 @@
         <div class="cycle">
           <div>
             <span>{{fund.cycle}}</span>天</div>
-          <div>预计年化收益</div>
+          <div>项目周期</div>
         </div>
         <div class="money">
           <div>
-            <span>募集总额：</span>{{fund.totalmoney}}元</div>
+            <span>募集总额：</span>{{fund.totalmoney | number}}元</div>
           <div>
             <span>还款方式：</span>{{fund.intro}}</div>
           <div>
@@ -26,9 +26,9 @@
           <div>
             <span>保障方式：</span>{{fund.grantway}}</div>
           <div>
-            <span>项目起息：</span>{{fund.starttime}}</div>
+            <span>项目起息：</span>{{fund.starttime | time}}</div>
           <div>
-            <span>项目结束：</span>{{fund.endtime}}</div>
+            <span>项目结束：</span>{{fund.endtime | time}}</div>
         </div>
         <div class="buy">
           <div class="progress">
@@ -37,13 +37,13 @@
           </div>
           <div class="left">
             <span>剩余可投：</span>
-            <span>{{fund.leftmoney}}元</span>
+            <span>{{fund.leftmoney | number}}元</span>
           </div>
-          <input class="input" type="number" placeholder="0">
+          <input class="input" type="number" placeholder="0" v-model="money">
           <div class="tips">预计收益
-            <span class="num">{{num}}</span>元
+            <span class="num">{{earning | number}}</span>元
           </div>
-          <m-button class="btn" size="large">立即申购</m-button>
+          <m-button class="btn" size="large" @click.native="buy">立即申购</m-button>
         </div>
       </div>
     </m-card>
@@ -51,20 +51,23 @@
       <m-tab-item v-for="(item, index) in ['项目详情','风险保障']" :key="index" :id="index">{{item}}</m-tab-item>
     </m-tabs>
     <m-card class="intruction" v-html="intruction || '暂无说明~'"></m-card>
+    <m-form :visible.sync="visible" type="trust" title="欢迎预约基金" :info="fund.fundname" @post="post"></m-form>
   </div>
 </template>
 
 <script>
   import api from '@/api/fund'
+  import mForm from '@/components/m-form.vue'
 
   export default {
     name: 'trust-fund-detail',
     props: ['id'],
     data() {
       return {
-        num: 0,
+        money: '',
         fund: {},
-        tabId: 0
+        tabId: 0,
+        visible: false
       }
     },
     computed: {
@@ -81,7 +84,46 @@
           case 0: return fund.detail
           case 1: return fund.safanote
         }
+      },
+      earning: function () {
+        return this.money * this.fund.rate / 100 * this.fund.cycle / 365
       }
+    },
+    filters: {
+      time: function (time) {
+        return moment.unix(time).format('YYYY-MM-DD')
+      },
+      number: function (num) {
+        if (num == undefined) return 0
+        let rex = /\d{1,3}(?=(\d{3})+$)/g
+        let str = Number(num).toFixed(2) + ''
+        return str.replace(/^(-?)(\d+)((\.\d+)?)$/, function (s, s1, s2, s3) {
+          return s1 + s2.replace(rex, '$&,') + s3
+        })
+      }
+    },
+    methods: {
+      buy: function () {
+        this.visible = true
+      },
+      post: function (params) {
+        Object.assign(params, {
+          id: this.fund.id,
+          money: this.money
+        })
+        api.addFundForm(params).then(data => {
+          if (data.code == 0) {
+            this.$message.success('提交成功！')
+            this.visible = false
+          }
+          else {
+            this.$message.error(data.msg);
+          }
+        })
+      }
+    },
+    components: {
+      mForm
     },
     beforeMount() {
       api.getFundDetail({ id: this.id }).then(fund => {

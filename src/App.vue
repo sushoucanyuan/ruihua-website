@@ -36,7 +36,7 @@
     padding: 80px 0;
   }
 
-  .page {
+  .m-page {
     font-size: 14px;
     line-height: 30px;
     letter-spacing: 1px;

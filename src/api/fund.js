@@ -29,5 +29,10 @@ export default {
     }).then(({
       data
     }) => data)
+  },
+  addFundForm(params) {
+    return instance.post('addFundForm', params).then(({
+      data
+    }) => data)
   }
 }

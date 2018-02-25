@@ -55,5 +55,10 @@ export default {
     }).then(({
       data
     }) => data)
+  },
+  addHousPlanForm(params) {
+    return instance.post('addHousPlanForm', params).then(({
+      data
+    }) => data)
   }
 }
