@@ -10,22 +10,49 @@
   }
 </script>
 
-<style>
-  :root {
-    --color-yellow-high: #ff8000;
-    --color-yellow-low: #d3a869;
-    --color-white-high: #fff;
-    --color-white-low: #f5f5f5;
-    --color-black-high: #000;
-    --color-black-origin: #292421;
-    --color-black-low: #c0c0c0;
+<style lang="postcss">
+  @import "./assets/css/var.css";
+
+  * {
+    margin: 0;
+    padding: 0;
   }
 
-  body{
-    margin: 0;
+  ul {
+    list-style: none;
+  }
+
+  .ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .none {
+    color: var(--color-yellow);
+    font-size: 28px;
+    letter-spacing: 5px;
+    text-align: center;
+    padding: 80px 0;
+  }
+
+  .m-page {
+    font-size: 14px;
+    line-height: 30px;
+    letter-spacing: 1px;
+  }
+
+  .el-pagination.is-background .el-pager li {
+    &.active {
+      background-color: var(--color-yellow);
+    }
+    &:not(.active):hover {
+      color: var(--color-yellow);
+    }
   }
 
   #app {
-    font-family: "微软雅黑", "宋体", Arial, sans-serif;
+    font-family: "Open Sans", "Helvetica Neue", Arial, "Hiragino Sans GB",
+      "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   }
 </style>

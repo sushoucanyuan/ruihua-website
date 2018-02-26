@@ -4,7 +4,11 @@ module.exports = {
   "plugins": {
     "postcss-import": {},
     "postcss-url": {},
-    // to edit target browsers: use "browserslist" field in package.json
-    "postcss-cssnext": {}
+    "postcss-nesting": {},
+    "postcss-css-variables": {},
+    "postcss-color-function": {},
+    "postcss-selector-matches": {},
+    "postcss-selector-not": {},
+    "autoprefixer": {}
   }
 }

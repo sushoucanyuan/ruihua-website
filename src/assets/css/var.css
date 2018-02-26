@@ -1,0 +1,30 @@
+:root {
+  /* Colors
+  -------------------------- */
+  --color-white: #fff;
+  --color-yellow: #c59b54;
+  --color-orange: #f08513;
+  --color-border: #c9c9c9;
+  --color-background: #1d1c1b;
+  --color-line: color(var(--color-border) a(40%));  
+  /* Font
+  -------------------------- */
+  --font-color-light-1: #000;
+  --font-color-light-2: #3e3a39;
+  --font-color-light-3: #707070;
+  --font-color-light-4: #898989;
+  --font-family-normal: "fzlth";
+  --font-family-thin: "fzltcxh";
+  /* layout
+  -------------------------- */
+  --index-width: 1200px;
+  --index-padding: 40px;
+  --index-padding-top: 75px;
+  --grid-gap: 40px 60px;
+  /* House
+  -------------------------- */
+  --house-padding: 24px 38px;
+  --house-img-height: 245px;
+  --house-img-transform: scale(1.25);
+  --house-img-transition: .6s .15s;
+}

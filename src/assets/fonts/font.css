@@ -1,0 +1,26 @@
+@font-face {
+  font-family: 'fzlth';
+  src: url('FZLTHJW.woff2') format('woff2'), /* Chrome Firefox */
+  url('FZLTHJW.woff') format('woff'), /* Modern Browsers */
+  url('FZLTHJW.ttf') format('truetype'); /* Safari, Android, iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'fzltcxh';
+  src: url('FZLTCXHJW.woff2') format('woff2'), /* Chrome Firefox */
+  url('FZLTCXHJW.woff') format('woff'), /* Modern Browsers */
+  url('FZLTCXHJW.ttf') format('truetype'); /* Safari, Android, iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'en-title';
+  src: url('AkzidenzGroteskBQ-MdCnd.woff2') format('woff2'), /* Chrome Firefox */
+  url('AkzidenzGroteskBQ-MdCnd.woff') format('woff'), /* Modern Browsers */
+  url('AkzidenzGroteskBQ-MdCnd.ttf') format('truetype'); /* Safari, Android, iOS */
+  font-weight: normal;
+  font-style: normal;
+}
