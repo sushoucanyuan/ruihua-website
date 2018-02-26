@@ -1,7 +1,8 @@
 import axios from 'axios'
+import config from './config'
 
 const instance = axios.create({
-  baseURL: 'open/api/house',
+  baseURL: config.domain + '/open/api/house',
   timeout: 5000
 })
 
@@ -9,7 +10,12 @@ export default {
   getHouseBanners() {
     return instance.get('getHouseBanners').then(({
       data
-    }) => data)
+    }) => {
+      data.forEach(item => {
+        item.picurl = config.domain + item.picurl
+      })
+      return data
+    })
   },
   getCitys() {
     return instance.get('getCitys').then(({
@@ -28,21 +34,37 @@ export default {
       params
     }).then(({
       data
-    }) => data)
+    }) => {
+      data.picurl = config.domain + data.picurl
+      data.planbanners.forEach(item => {
+        item.picurl = config.domain + item.picurl
+      })
+      return data
+    })
   },
   getHouses(params) {
     return instance.get('getHouses', {
       params
     }).then(({
       data
-    }) => data)
+    }) => {
+      data.forEach(item => {
+        item.picurl = config.domain + item.picurl
+      })
+      return data
+    })
   },
   getHotHouses(params) {
     return instance.get('getHotHouses', {
       params
     }).then(({
       data
-    }) => data)
+    }) => {
+      data.forEach(item => {
+        item.picurl = config.domain + item.picurl
+      })
+      return data
+    })
   },
   getHouseInfo(params) {
     return instance.get('getHouseInfo', params).then(({

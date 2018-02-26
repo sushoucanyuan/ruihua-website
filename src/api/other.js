@@ -1,7 +1,9 @@
 import axios from 'axios'
+import config from './config'
 
 const instance = axios.create({
-  baseURL: 'open/api/other'
+  baseURL: config.domain + '/open/api/other',
+  timeout: 5000
 })
 
 export default {
@@ -13,13 +15,18 @@ export default {
   getBannerList() {
     return instance.get('getBannerList').then(({
       data
-    }) => data)
+    }) => {
+      data.forEach(item => {
+        item.picurl = config.domain + item.picurl
+      })
+      return data
+    })
   },
   getQrcode(params) {
     return instance.get('getQrcode', {
       params
     }).then(({
       data
-    }) => data.url)
+    }) => config.domain + data.url)
   }
 }
