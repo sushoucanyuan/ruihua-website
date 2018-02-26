@@ -7,7 +7,7 @@
           <m-icon class="icon" name="weibo"></m-icon>
           <span>关注微博</span>
         </li>
-        <li class="sidebox">
+        <li class="sidebox" @click="phoneVisible = true">
           <m-icon class="icon" name="kefu"></m-icon>
           <span>咨询电话</span>
         </li>
@@ -15,16 +15,16 @@
           <m-icon class="icon" name="fenxiang"></m-icon>
           <span>分&emsp;&emsp;享</span>
           <ul class="share-box">
-            <li class="share-icon">
+            <li class="share-icon" @click="weixin">
               <m-icon name="pengyouquan"></m-icon>
             </li>
-            <li class="share-icon">
+            <li class="share-icon" @click="weibo">
               <m-icon name="weibo"></m-icon>
             </li>
-            <li class="share-icon">
+            <li class="share-icon" @click="qq">
               <m-icon name="qq"></m-icon>
             </li>
-            <li class="share-icon">
+            <li class="share-icon" @click="weixin">
               <m-icon name="weixin"></m-icon>
             </li>
           </ul>
@@ -35,18 +35,62 @@
       <m-icon class="icon" name="xiangshang"></m-icon>
       <span>回到顶部</span>
     </div>
+
+    <el-dialog class="phone" title="联系电话" center :visible.sync="phoneVisible" width="400px">
+      <div class="number">+61 733-423-297</div>
+    </el-dialog>
+
+    <el-dialog class="dialog" title="快打开微信扫码分享吧" :visible.sync="dialogVisible" width="300px">
+      <div class="qrcode" v-loading="qrcode.loading"><img :src="qrcode.url"></div>
+    </el-dialog>
   </aside>
 </template>
 
 <script>
+  import api_other from '@/api/other'
 
   export default {
     data() {
       return {
-        isShow: false
+        isShow: false,
+        phoneVisible: false,
+        dialogVisible: false,
+        qrcode: {
+          loading: false,
+          url: ''
+        }
       }
     },
     methods: {
+      weibo: function () {
+
+      },
+      qq: function () {
+        let info = this.info
+        let p = {
+          url: location.hostname, /*获取URL，可加上来自分享到QQ标识，方便统计*/
+          desc: '瑞华集团', /*分享理由(风格应模拟用户对话),支持多分享语随机展现（使用|分隔）*/
+          title: '瑞华集团', /*分享标题(可选)*/
+          summary: '瑞虎集团', /*分享摘要(可选)*/
+          // pics: '', /*分享图片(可选)*/
+          style: '201',
+          width: 32,
+          height: 32
+        }
+        let s = []
+        for (let i in p) {
+          s.push(i + '=' + encodeURIComponent(p[i] || ''))
+        }
+        window.open(`http://connect.qq.com/widget/shareqq/index.html?${s.join('&')}`)
+      },
+      weixin: function () {
+        this.dialogVisible = true
+        this.qrcode.loading = true
+        api_other.getQrcode({ content: location.href }).then(url => {
+          this.qrcode.url = url
+          this.qrcode.loading = false
+        })
+      },
       goTop() {
         clearInterval(timer);
         var timer = setInterval(function () {
@@ -69,7 +113,7 @@
     position: fixed;
     right: 5px;
     bottom: 40px;
-    z-index: 100;
+    z-index: 3000;
     box-sizing: border-box;
     background-color: var(--color-background);
     & > .container {
@@ -130,7 +174,7 @@
                 font-size: 18px;
                 position: relative;
                 width: 52px;
-                transition: .2s;
+                transition: 0.2s;
                 &:not(:last-child)::after {
                   content: "";
                   position: absolute;
@@ -168,7 +212,7 @@
               }
             }
             &:hover > .share-box {
-              transform: scale(1);              
+              transform: scale(1);
             }
           }
         }
@@ -191,6 +235,18 @@
         font-size: 15px;
         letter-spacing: 1px;
         transform: scaleX(0.94);
+      }
+    }
+    & > .phone .number{
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    & > .dialog .qrcode {
+      text-align: center;
+      & > img {
+        width: 180px;
+        height: 180px;
       }
     }
   }

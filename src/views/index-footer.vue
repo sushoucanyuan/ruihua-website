@@ -2,7 +2,7 @@
   <footer>
     <div class="container">
       <div class="contacts">
-        <span v-for="item in contacts" :key="item">{{item}}</span>
+        <span v-once v-for="item in contacts" :key="item">{{item}}</span>
       </div>
       <div class="comnpanion">
         <nav class="links">
@@ -41,54 +41,34 @@
 
   footer {
     background-color: var(--color-background);
+    padding: 100px 100px 200px;
     & > .container {
-      display: flex;
-      align-items: center;
       box-sizing: border-box;
-      height: 300px;
-      width: 100%;
       max-width: 1500px;
       padding: 0 var(--index-padding) 4px;
-      flex-wrap: wrap;
       margin: 0 auto;
       & > .contacts {
-        position: relative;
-        width: 100%;
         margin: 0 auto;
         color: #898989;
         font-size: 16px;
         display: flex;
-        justify-content: space-around;
-        &::after {
-          content: " ";
-          position: absolute;
-          width: 90%;
-          height: 1px;
-          bottom: -40px;
-          left: 5%;
-          background-color: #3a3938;
-        }
+        justify-content: space-between;
+        padding-bottom: 22px;
+        border-bottom: 1px solid #3a3938;
       }
       & > .comnpanion {
-        width: 100%;
-        margin: 0 auto;
+        margin-top: 60px;
         & > .links {
           display: flex;
-          justify-content: space-around;
+          flex-wrap: no-wrap;
+          justify-content: space-between;
           width: 100%;
           & .link {
             color: #898989;
             font-size: 16px;
             text-decoration: none;
             position: relative;
-            &:not(:last-child)::after {
-              content: " ";
-              position: absolute;
-              width: 2px;
-              height: 20px;
-              right: -30px;
-              background-color: #3a3938;
-            }
+
             &.router-link-active {
               color: #898989;
             }
@@ -96,12 +76,14 @@
         }
       }
       & > .copyright {
-        width: 50%;
-        margin: 0 auto;
         display: flex;
-        justify-content: space-around;
+        justify-content: center;
+        margin-top: 130px;
         color: #535353;
         font-size: 14px;
+        & > span{
+          margin: 0 20px;
+        }
       }
     }
   }

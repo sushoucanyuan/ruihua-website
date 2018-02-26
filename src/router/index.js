@@ -76,7 +76,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.name != from.name) {
-    setTimeout(() => document.body.scrollTop = document.documentElement.scrollTop = 0, 200)
+    setTimeout(() => document.body.scrollTop = document.documentElement.scrollTop = 0, 400)
   }
   next()
 })
