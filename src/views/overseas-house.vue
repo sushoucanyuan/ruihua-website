@@ -52,7 +52,7 @@
         </div>
       </m-card>
       <m-card class="steps" direction="row">
-        <img class="header" slot="header" src="/static/steps.png">
+        <img class="header" slot="header" src="/static/estate/steps.png">
         <div class="body">
           <div v-for="(item, index) in ['预定房源', '约见律师', '签约合同', '贷款预批', '房屋交割']" :key="index">
             <div>
@@ -155,7 +155,7 @@
   @import "../assets/css/var.css";
 
   .overseas-house {
-    background-image: url("/static/background-top.png");
+    background-image: url("/static/estate/background-top.png");
     background-repeat: no-repeat;
     background-size: contain;
     padding-bottom: 150px;

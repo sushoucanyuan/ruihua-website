@@ -14,7 +14,7 @@
       <div>
         <span class="line"></span>
         <div class="container">
-          <img src="/static/home-about.png">
+          <img src="/static/home/home-about.png">
           <div class="info">
             <div class="cn">
               <div>以客户为中心</div>

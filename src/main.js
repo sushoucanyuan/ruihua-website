@@ -12,6 +12,10 @@ moment.locale('zh-cn')
 
 window.moment = moment
 
+import touch from './directives/touch'
+
+Vue.directive('touch', touch)
+
 //import 基础组件
 import mIcon from '@/components/m-icon.vue'
 import mCard from '@/components/m-card.vue'

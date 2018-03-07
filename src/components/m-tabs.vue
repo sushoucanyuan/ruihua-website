@@ -1,6 +1,6 @@
 <template>
   <div ref="tab" class="m-tabs" :class="'type-' + type">
-    <div class="m-tabs-container">
+    <div class="m-tabs-container" v-touch.x>
       <div ref="container" v-if="type == 'img'">
         <slot></slot>
       </div>
@@ -78,12 +78,15 @@
   }
 
   .m-tabs {
+    position: relative;
     overflow: hidden;
     & .m-tabs-loading {
       text-indent: 3px;
       letter-spacing: 3px;
     }
     &.type-default {
+      height: 70px;
+      border-bottom: 2px solid var(--color-yellow);
       & > .m-tabs-container {
         color: var(--color-gray);
         font-size: 16px;
@@ -91,9 +94,15 @@
         display: flex;
         justify-content: space-around; /* 兼容低版本 */
         justify-content: space-evenly;
-        border-bottom: 2px solid var(--color-yellow);
+        min-width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
         & > .m-tab-item {
           cursor: pointer;
+          text-align: center;          
+          flex-shrink: 0;
+          min-width: 150px;
           transition: 0.1s;
           &:matches(.is-active, :hover) {
             color: var(--color-yellow);
@@ -102,16 +111,22 @@
       }
     }
     &.type-button {
+      height: 40px;
       & > .m-tabs-container {
+        min-width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
         display: flex;
         justify-content: center;
         & > .m-tab-item {
           font-size: 16px;
+          line-height: 40px;
           font-weight: bold;
           text-align: center;
           letter-spacing: 1px;
-          width: 150px;
-          padding: 12px 0;
+          flex-shrink: 0;
+          min-width: 150px;
           border-radius: 5px;
           transition: 0.1s;
           &.is-active {
@@ -125,6 +140,33 @@
             &:hover {
               color: var(--color-yellow);
             }
+          }
+        }
+      }
+    }
+    &.type-banding {
+      height: 66px;
+      & > .m-tabs-container {
+        color: var(--color-white);
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 66px;
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        & > .m-tab-item {
+          text-align: center;
+          letter-spacing: 1px;
+          flex-shrink: 0;
+          width: 300px;
+          background-color: var(--color-yellow);
+          &.is-active {
+            cursor: default;
+            background-color: #ad7d34;
+          }
+          &:not(.is-active) {
+            cursor: pointer;
           }
         }
       }
@@ -145,29 +187,6 @@
           }
           &:matches(.is-active, :hover) {
             color: var(--font-color-light-1);
-          }
-        }
-      }
-    }
-    &.type-banding {
-      & > .m-tabs-container {
-        color: var(--color-white);
-        font-size: 20px;
-        font-weight: bold;
-        line-height: 66px;
-        display: flex;
-        justify-content: space-around;
-        background-color: var(--color-yellow);
-        & > .m-tab-item {
-          text-align: center;
-          letter-spacing: 1px;
-          width: 25%;
-          &.is-active {
-            cursor: default;
-            background-color: #ad7d34;
-          }
-          &:not(.is-active) {
-            cursor: pointer;
           }
         }
       }

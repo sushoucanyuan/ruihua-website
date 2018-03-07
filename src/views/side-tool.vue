@@ -1,7 +1,7 @@
 <template>
   <aside>
     <div class="container">
-      <img src="/static/QR-code.png" alt="二维码">
+      <img src="/static/index/QR-code.png" alt="二维码">
       <ul class="info">
         <li class="sidebox">
           <m-icon class="icon" name="weibo"></m-icon>

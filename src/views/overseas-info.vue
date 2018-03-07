@@ -134,7 +134,7 @@
   @import "../assets/css/var.css";
 
   .overseas-info {
-    background-image: url("/static/background-top.png");
+    background-image: url("/static/estate/background-top.png");
     background-repeat: no-repeat;
     background-size: contain;
     padding-bottom: 90px;
