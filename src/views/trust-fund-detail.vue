@@ -4,31 +4,37 @@
     <m-card class="card">
       <div class="name">{{fund.fundname}}</div>
       <div class="info">
-        <div class="rate">
-          <div>
-            <span>{{fund.rate}}</span>%</div>
-          <div>预计年化收益</div>
-        </div>
-        <div class="cycle">
-          <div>
-            <span>{{fund.cycle}}</span>天</div>
-          <div>项目周期</div>
-        </div>
-        <div class="money">
-          <div>
-            <span>募集总额：</span>{{fund.totalmoney | number}}元</div>
-          <div>
-            <span>还款方式：</span>{{fund.intro}}</div>
-          <div>
-            <span>项目评级：</span>{{fund.type}}</div>
-        </div>
-        <div class="time">
-          <div>
-            <span>保障方式：</span>{{fund.grantway}}</div>
-          <div>
-            <span>项目起息：</span>{{fund.starttime | time}}</div>
-          <div>
-            <span>项目结束：</span>{{fund.endtime | time}}</div>
+        <div class="left">
+          <div class="first">
+            <div class="rate">
+              <div>
+                <span>{{fund.rate}}</span>%</div>
+              <div>预计年化收益</div>
+            </div>
+            <div class="cycle">
+              <div>
+                <span>{{fund.cycle}}</span>天</div>
+              <div>项目周期</div>
+            </div>
+          </div>
+          <div class="second">
+            <div class="money">
+              <div>
+                <span>募集总额：</span>{{fund.totalmoney | number}}元</div>
+              <div>
+                <span>还款方式：</span>{{fund.intro}}</div>
+              <div>
+                <span>项目评级：</span>{{fund.type}}</div>
+            </div>
+            <div class="time">
+              <div>
+                <span>保障方式：</span>{{fund.grantway}}</div>
+              <div>
+                <span>项目起息：</span>{{fund.starttime | time}}</div>
+              <div>
+                <span>项目结束：</span>{{fund.endtime | time}}</div>
+            </div>
+          </div>
         </div>
         <div class="buy">
           <div class="progress">
@@ -145,66 +151,70 @@
         font-size: 32px;
       }
       & .info {
-        display: grid;
-        grid-template-columns: [start] repeat(3, 1fr) [end];
-        grid-template-areas:
-          "rate  cycle buy"
-          "money time  buy";
+        display: flex;
         margin-top: 55px;
-        & > .rate {
-          grid-area: rate;
+        --buy-width: 380px;
+        & > .left {
+          flex-grow: 1;
+          box-sizing: border-box;
+          width: calc(100% - var(--buy-width));
+          height: 100%;
           padding-left: 15px;
-        }
-        & > .cycle {
-          position: relative;
-          grid-area: cycle;
-          &::before {
-            content: "";
-            position: absolute;
-            left: -40px;
-            top: 15px;
-            width: 1px;
-            height: 63px;
-            background-color: var(--color-line);
-          }
-        }
-        & > :matches(.rate, .cycle) {
-          color: var(--font-color-light-4);
-          font-size: 14px;
-          height: 110px;
-          & > :first-child {
-            color: var(--font-color-light-1);
-            font-size: 25px;
-            & > span {
-              font-size: 47px;
+          & > * {
+            display: flex;
+            align-items: stretch;
+            & > * {
+              flex-grow: 1;
             }
           }
-          &.rate > :first-child {
-            color: var(--color-orange);
-            & > span {
-              font-weight: bold;
+          & > .first {
+            & > .cycle {
+              position: relative;
+              &::before {
+                content: "";
+                position: absolute;
+                left: -40px;
+                top: 15px;
+                width: 1px;
+                height: 63px;
+                background-color: var(--color-line);
+              }
+            }
+            & > :matches(.rate, .cycle) {
+              color: var(--font-color-light-4);
+              font-size: 14px;
+              height: 110px;
+              & > :first-child {
+                color: var(--font-color-light-1);
+                font-size: 25px;
+                & > span {
+                  font-size: 47px;
+                }
+              }
+              &.rate > :first-child {
+                color: var(--color-orange);
+                & > span {
+                  font-weight: bold;
+                }
+              }
             }
           }
-        }
-        & > .money {
-          grid-area: money;
-          padding-left: 15px;
-        }
-        & > .time {
-          grid-area: time;
-        }
-        & > :matches(.money, .time) {
-          color: var(--font-color-light-1);
-          font-size: 14px;
-          line-height: 1.9;
-          & span {
-            color: var(--font-color-light-4);
-            padding-right: 20px;
+          & > .second {
+            & > :matches(.money, .time) {
+              color: var(--font-color-light-1);
+              font-size: 14px;
+              line-height: 1.9;
+              & span {
+                color: var(--font-color-light-4);
+                padding-right: 20px;
+              }
+            }
           }
         }
         & > .buy {
+          box-sizing: border-box;
+          width: var(--buy-width);
           position: relative;
-          grid-area: buy;
           padding-top: 8px;
           padding-left: 48px;
           &::before {

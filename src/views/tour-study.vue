@@ -185,7 +185,8 @@
           position: relative;
           width: 320px;
           height: 170px;
-          padding: 4px;
+          margin: 4px;
+          overflow: hidden;
           & > img {
             display: block;
             width: 100%;
@@ -210,7 +211,6 @@
               line-height: 35px;
               text-align: center;
               flex-grow: 1;
-
               background-color: var(--color-orange);
             }
           }

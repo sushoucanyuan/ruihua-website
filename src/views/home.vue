@@ -40,20 +40,22 @@
             <m-tab-item v-for="item in estate.citys" :key="item.id" :id="item.id">{{item.name}}</m-tab-item>
           </m-tabs>
           <div class="none" v-if="estate.citys.length" v-show="!estate.houses.length">暂时没有数据惹~</div>
-          <m-card class="card" v-for="item in estate.houses" :key="item.id" :ishot="item.ishot" @click.native="$router.push({name: 'overseas-house', params: {id: item.planid}})">
-            <div class="header" slot="header">
-              <img :src="item.picurl" />
-            </div>
-            <div class="body">
-              <div class="title">{{item.title}}</div>
-              <div class="value">
-                总价：￥
-                <span class="num">{{item.rmb}}</span>
-                万起
+          <div class="card-container">
+            <m-card class="card" v-for="item in estate.houses" :key="item.id" :ishot="item.ishot" @click.native="$router.push({name: 'overseas-house', params: {id: item.planid}})">
+              <div class="header" slot="header">
+                <img :src="item.picurl" />
               </div>
-              <div class="type">类型：{{item.type}} / 套内面积：{{item.area}}</div>
-            </div>
-          </m-card>
+              <div class="body">
+                <div class="title">{{item.title}}</div>
+                <div class="value">
+                  总价：￥
+                  <span class="num">{{item.rmb}}</span>
+                  万起
+                </div>
+                <div class="type">类型：{{item.type}} / 套内面积：{{item.area}}</div>
+              </div>
+            </m-card>
+          </div>
         </div>
       </div>
     </section>
@@ -68,16 +70,18 @@
             <m-tab-item v-for="item in toutism.types" :key="item.id" :id="item.id">{{item.name}}</m-tab-item>
           </m-tabs>
           <div class="none" v-show="!toutism.trips.length">暂时没有数据惹~</div>
-          <m-card class="card" v-for="item in toutism.trips" :key="item.id" :ishot="item.ishot" @click.native="$router.push({name: 'tour-study-detail', params: {id: item.id}})">
-            <div class="header" slot="header">
-              <img :src="item.picurl" />
-            </div>
-            <div class="body">
-              <div class="title">{{item.title}}</div>
-              <div class="info">{{item.info}}</div>
-              <div class="tips">机票 / 酒店 / 景点 / 活动 / 路书 / 签证 / 保险 / WiFi，一价全包</div>
-            </div>
-          </m-card>
+          <div class="card-container">
+            <m-card class="card" v-for="item in toutism.trips" :key="item.id" :ishot="item.ishot" @click.native="$router.push({name: 'tour-study-detail', params: {id: item.id}})">
+              <div class="header" slot="header">
+                <img :src="item.picurl" />
+              </div>
+              <div class="body">
+                <div class="title">{{item.title}}</div>
+                <div class="info">{{item.info}}</div>
+                <div class="tips">机票 / 酒店 / 景点 / 活动 / 路书 / 签证 / 保险 / WiFi，一价全包</div>
+              </div>
+            </m-card>
+          </div>
         </div>
       </div>
     </section>
@@ -88,16 +92,18 @@
           <m-button class="btn" type="plain" size="small" @click="$router.push({name: 'trust-fund'})">更多</m-button>
         </div>
         <div class="grid">
-          <m-card class="card" v-for="item in trustFund.funds" :key="item.id" :ishot="item.ishot" @click.native="$router.push({name: 'trust-fund-detail', params: {id: item.id}})" notZoom>
-            <div class="header" slot="header">
-              <img :src="item.picurl1" />
-            </div>
-            <div class="body">
-              <div class="line"></div>
-              <div class="name">{{item.fundname}}</div>
-              <div class="intro">{{item.intro}} </div>
-            </div>
-          </m-card>
+          <div class="card-container">
+            <m-card class="card" v-for="item in trustFund.funds" :key="item.id" :ishot="item.ishot" @click.native="$router.push({name: 'trust-fund-detail', params: {id: item.id}})" notZoom>
+              <div class="header" slot="header">
+                <img :src="item.picurl1" />
+              </div>
+              <div class="body">
+                <div class="line"></div>
+                <div class="name">{{item.fundname}}</div>
+                <div class="intro">{{item.intro}} </div>
+              </div>
+            </m-card>
+          </div>
         </div>
       </div>
     </section>
@@ -292,9 +298,8 @@
       & > .container {
         width: var(--index-width);
         margin: 0 auto;
-        padding: 75px 0 105px;
+        padding: 75px 0 65px;
         & > .title {
-          grid-column: start / end;
           display: flex;
           justify-content: space-between;
           & > .btn {
@@ -302,23 +307,27 @@
           }
         }
         & > .grid {
-          display: grid;
-          grid-gap: var(--grid-gap);
-          grid-template-columns: [start] repeat(3, 1fr) [end];
-          & > .tabs {
-            grid-column: start / end;
+          & > :matches(.tabs, .none) {
+            margin-bottom: 40px;
           }
-          & > .none {
-            grid-column: start / end;
-          }
-          & > .card {
-            cursor: pointer;
-            & .header {
-              width: 100%;
-            }
-            & .body {
-              padding: var(--house-padding);
-              box-sizing: border-box;
+          & > .card-container {
+            display: flex;
+            & > .card {
+              cursor: pointer;
+              display: inline-block;
+              width: 360px;
+              margin-right: 60px;
+              margin-bottom: 40px;
+              &:nth-child(3n) {
+                margin-right: 0;
+              }
+              & .header {
+                width: 100%;
+              }
+              & .body {
+                padding: var(--house-padding);
+                box-sizing: border-box;
+              }
             }
           }
         }
@@ -353,8 +362,11 @@
       }
       &.toutism {
         background-color: var(--color-white);
-        & > .container > .grid {
-          grid-template-columns: [start] repeat(2, 1fr) [end];
+        & > .container > .grid > .card-container > .card {
+          width: 570px;
+          &:nth-child(2n) {
+            margin-right: 0;
+          }
         }
         & .header {
           height: 285px;

@@ -6,6 +6,10 @@ import router from './router'
 import '@/assets/fonts/font.css'
 import '@/assets/icons/iconfont'
 
+import promise from 'es6-promise'
+
+promise.polyfill()
+
 import moment from 'moment'
 
 moment.locale('zh-cn')

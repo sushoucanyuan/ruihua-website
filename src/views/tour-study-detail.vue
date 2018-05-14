@@ -52,28 +52,30 @@
         <div class="travel-highlights">
           <m-title class="title" :level="2" cn="旅行亮点" en="travel highlights"></m-title>
           <div class="exhibition">
-            <div>
-              <img :src="trip.lightpicurl1">
+            <div class="left">
+              <div>
+                <img :src="trip.lightpicurl1">
+              </div>
+              <div>
+                <div class="title">{{trip.lighttitle1}}</div>
+                <div class="content">{{trip.lightcontent1}}</div>
+              </div>
+              <div>
+                <img :src="trip.lightpicurl2">
+              </div>
+              <div>
+                <div class="title">{{trip.lighttitle2}}</div>
+                <div class="content">{{trip.lightcontent2}}</div>
+              </div>
+              <div>
+                <img :src="trip.lightpicurl3">
+              </div>
+              <div>
+                <div class="title">{{trip.lighttitle3}}</div>
+                <div class="content">{{trip.lightcontent3}}</div>
+              </div>
             </div>
-            <div>
-              <div class="title">{{trip.lighttitle1}}</div>
-              <div class="content">{{trip.lightcontent1}}</div>
-            </div>
-            <div>
-              <img :src="trip.lightpicurl2">
-            </div>
-            <div>
-              <div class="title">{{trip.lighttitle2}}</div>
-              <div class="content">{{trip.lightcontent2}}</div>
-            </div>
-            <div>
-              <img :src="trip.lightpicurl3">
-            </div>
-            <div>
-              <div class="title">{{trip.lighttitle3}}</div>
-              <div class="content">{{trip.lightcontent3}}</div>
-            </div>
-            <div v-if="trip.lightinfo">
+            <div class="right" v-if="trip.lightinfo">
               <img :src="trip.lightpicurl">
               <div class="lightinfo">{{trip.lightinfo}}</div>
             </div>
@@ -266,10 +268,8 @@
         & > .travel-highlights {
           margin-top: 60px;
           & > .exhibition {
-            display: grid;
-            grid-gap: 6px;
-            grid-template-rows: [start] repeat(2, 50%) [end];
-            grid-template-columns: [start] repeat(6, 1fr) [end];
+            display: flex;
+            justify-content: space-between;
             margin-top: 25px;
             height: 400px;
             & img {
@@ -277,42 +277,53 @@
               width: 100%;
               height: 100%;
             }
-            & > :nth-child(even) {
-              color: var(--color-yellow);
-              text-align: center;
-              position: relative;
+            & > .left {
               display: flex;
-              flex-direction: column;
-              padding: 50px 20px 0;
-              border: 2px solid var(--color-yellow);
-              &::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 0;
-                height: 0;
-                border: 25px solid transparent;
-                border-top-color: var(--color-yellow);
-                border-left-color: var(--color-yellow);
-              }
-              & > .title {
-                font-size: 24px;
-                font-weight: bold;
-                letter-spacing: 4px;
-              }
-              & > .content {
-                font-size: 14px;
-                font-weight: bold;
-                line-height: 22px;
-                letter-spacing: 1px;
-                margin-top: 12px;
+              flex-wrap: wrap;
+              width: 603px;
+              & > div {
+                box-sizing: border-box;
+                width: 195px;
+                margin-right: 6px;
+                margin-bottom: 6px;
+                &:nth-child(even) {
+                  color: var(--color-yellow);
+                  text-align: center;
+                  position: relative;
+                  display: flex;
+                  flex-direction: column;
+                  padding: 50px 20px 0;
+                  border: 2px solid var(--color-yellow);
+                  &::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 0;
+                    height: 0;
+                    border: 25px solid transparent;
+                    border-top-color: var(--color-yellow);
+                    border-left-color: var(--color-yellow);
+                  }
+                  & > .title {
+                    font-size: 24px;
+                    font-weight: bold;
+                    letter-spacing: 4px;
+                  }
+                  & > .content {
+                    font-size: 14px;
+                    font-weight: bold;
+                    line-height: 22px;
+                    letter-spacing: 1px;
+                    margin-top: 12px;
+                  }
+                }
               }
             }
             & > :last-child {
               position: relative;
-              grid-row: start / end;
-              grid-column: 4 / end;
+              width: 597px;
+              padding-bottom: 6px;
               & > .lightinfo {
                 color: var(--color-white);
                 font-size: 14px;
@@ -357,31 +368,21 @@
             margin-top: 4px;
           }
         }
-        & > .recommend {
-          display: grid;
-          grid-gap: var(--grid-gap);
-          grid-template-columns: [start] repeat(3, 1fr) [end];
-          margin-bottom: 20px;
-          & > .title {
-            grid-column: start / end;
-          }
-          & > .card {
-            & img {
-              width: 100%;
-            }
-          }
-        }
       }
       & > .recommend {
         margin: 90px 0 180px;
         & > .cards {
-          display: grid;
-          grid-gap: var(--grid-gap);
-          grid-template-columns: [start] repeat(3, 1fr) [end];
+          display: flex;
           padding-top: 40px;
           & > .card {
+            display: inline-block;
+            width: 360px;
+            margin-right: 60px;
             cursor: pointer;
             position: relative;
+            &:nth-child(3n) {
+              margin-right: 0;
+            }
             & .tips {
               color: var(--color-white);
               font-size: 17px;
@@ -396,7 +397,7 @@
               background-color: var(--color-orange);
             }
             & .header {
-              height: 200px;
+              height: 190px;
               overflow: hidden;
               & img {
                 width: 100%;

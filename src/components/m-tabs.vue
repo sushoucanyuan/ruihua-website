@@ -92,9 +92,9 @@
         font-size: 16px;
         line-height: 70px;
         display: flex;
-        justify-content: space-around; /* 兼容低版本 */
-        justify-content: space-evenly;
+        justify-content: space-around;
         min-width: 100%;
+        padding: 0 20px;
         position: absolute;
         top: 0;
         left: 0;

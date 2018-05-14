@@ -38,7 +38,7 @@
         </div>
         <div class="recommand">
           <m-title class="title" level="2" en="recommend" cn="瑞华推荐"></m-title>
-          <m-recommend v-for="item in recommend" :key="item.planid" :item="item"></m-recommend>
+          <m-recommend class="card" v-for="item in recommend" :key="item.planid" :item="item"></m-recommend>
         </div>
       </div>
       <section class="recom">
@@ -101,7 +101,7 @@
         for (let i in p) {
           s.push(i + '=' + encodeURIComponent(p[i] || ''))
         }
-        window.open(`http://connect.qq.com/widget/shareqq/index.html?${s.join('&')}`)        
+        window.open(`http://connect.qq.com/widget/shareqq/index.html?${s.join('&')}`)
       },
       weixin: function () {
         this.dialogVisible = true
@@ -146,14 +146,12 @@
         margin-bottom: 50px;
       }
       & > .info {
-        display: grid;
-        grid-gap: var(--grid-gap);
-        grid-template-columns: [start] repeat(3, 1fr) [end];
-        grid-template-areas: "page page recommand";
-        align-items: start;
+        display: flex;
+
         & > .page {
-          grid-area: page;
+          width: 720px;
           height: 600px;
+          margin-right: 60px;
           bottom: 1px solid color(--color-border);
           & > .title {
             color: var(--font-color-light-2);
@@ -250,10 +248,11 @@
           }
         }
         & > .recommand {
-          grid-area: recommand;
-          display: grid;
-          grid-gap: var(--grid-gap);
-          grid-template-columns: 1fr;
+          display: flex;
+          flex-flow: column;
+          & > .card:not(:last-child) {
+            margin-bottom: 40px;
+          }
         }
       }
       & > .recom {

@@ -11,56 +11,62 @@
           </template>
         </m-tabs>
         <section class="ruihua-recommend" v-loading="recom_loading">
-          <m-title class="title ellipsis" :level="2" cn="瑞华推荐" en="recommend"></m-title>
+          <m-title class="title" :level="2" cn="瑞华推荐" en="recommend"></m-title>
           <div class="none" v-show="!recommend.length">暂时没有数据惹~</div>
-          <m-recommend v-for="item in recommend" :key="item.planid" :item="item"></m-recommend>
+          <div class="list">
+            <m-recommend v-for="item in recommend" :key="item.planid" :item="item"></m-recommend>
+          </div>
         </section>
         <section class="info" ref="info">
-          <div class="house-info">
-            <m-title class="title" :level="3" cn="房源信息"></m-title>
-            <m-tool :types="['推荐', '时间', '价格']" :typeId.sync="type" :sortway.sync="sortway"></m-tool>
-          </div>
-          <div class="house-cards" v-loading="house_loading">
-            <div class="none" v-show="!houses.length">暂时没有数据惹~</div>
-            <m-card class="card" v-for="item in houses" :key="item.planid" direction="row" :ishot="item.ishot">
-              <div class="header" slot="header">
-                <img :src="item.picurl" />
-              </div>
-              <div class="body">
-                <div class="title ellipsis">{{item.title}}</div>
-                <div class="info">
-                  <div>
-                    <div class="key ellipsis">房产类型：
-                      <span class="value">{{item.type}}</span>
+          <div class="left">
+            <div class="house-info">
+              <m-title class="title" :level="3" cn="房源信息"></m-title>
+              <m-tool :types="['推荐', '时间', '价格']" :typeId.sync="type" :sortway.sync="sortway"></m-tool>
+            </div>
+            <div class="house-cards" v-loading="house_loading">
+              <div class="none" v-show="!houses.length">暂时没有数据惹~</div>
+              <m-card class="card" v-for="item in houses" :key="item.planid" direction="row" :ishot="item.ishot">
+                <div class="header" slot="header">
+                  <img :src="item.picurl" />
+                </div>
+                <div class="body">
+                  <div class="title">{{item.title}}</div>
+                  <div class="info">
+                    <div>
+                      <div class="key ellipsis">房产类型：
+                        <span class="value">{{item.type}}</span>
+                      </div>
+                      <div class="key ellipsis">可选户型：
+                        <span class="value">{{item.layout}}</span>
+                      </div>
+                      <div class="key ellipsis">套内面积：
+                        <span class="value">{{item.area}}</span>
+                      </div>
+                      <div class="key ellipsis">交楼时间：
+                        <span class="value">{{item.dealtime}}</span>
+                      </div>
                     </div>
-                    <div class="key ellipsis">可选户型：
-                      <span class="value">{{item.layout}}</span>
+                    <div>
+                      <div class="rmb">总价：
+                        <span class="num">{{item.rmb}}
+                        </span>万起（人名币）</div>
+                      <div class="aud">AUD：
+                        <span class="num">{{item.aud}}</span>万起（澳币）</div>
+                      <m-button class="btn" @click.native="$router.push({name: 'overseas-house', params: {id: item.planid}})">咨询</m-button>
                     </div>
-                    <div class="key ellipsis">套内面积：
-                      <span class="value">{{item.area}}</span>
-                    </div>
-                    <div class="key ellipsis">交楼时间：
-                      <span class="value">{{item.dealtime}}</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="rmb">总价：
-                      <span class="num">{{item.rmb}}
-                      </span>万起（人名币）</div>
-                    <div class="aud">AUD：
-                      <span class="num">{{item.aud}}</span>万起（澳币）</div>
-                    <m-button class="btn" @click.native="$router.push({name: 'overseas-house', params: {id: item.planid}})">咨询</m-button>
                   </div>
                 </div>
-              </div>
-            </m-card>
-            <el-pagination class="pagination" layout="prev, pager, next, jumper" :total="count" :page-size="size" :current-page.sync="page" background></el-pagination>
+              </m-card>
+              <el-pagination class="pagination" layout="prev, pager, next, jumper" :total="count" :page-size="size" :current-page.sync="page" background></el-pagination>
+            </div>
           </div>
-          <m-title class="recommend-info" :level="2" cn="瑞华房产资讯" en="information"></m-title>
-          <div class="recommend-card">
-            <m-card class="card">
-              <m-info class="info" v-for="item in info" :key="item.id" :info="item"></m-info>
-            </m-card>
+          <div class="right">
+            <m-title class="recommend-info" :level="2" cn="瑞华房产资讯" en="information"></m-title>
+            <div class="recommend-card">
+              <m-card class="card">
+                <m-info class="info" v-for="item in info" :key="item.id" :info="item"></m-info>
+              </m-card>
+            </div>
           </div>
         </section>
       </div>
@@ -226,153 +232,147 @@
       margin: 0 auto;
       padding-top: var(--index-padding-top);
       & > .grid {
-        display: grid;
-        grid-gap: var(--grid-gap);
-        grid-template-columns: [start] repeat(3, 1fr) [end];
         & > .tabs {
-          grid-column: start / end;
+          margin-bottom: 40px;
         }
         & > .ruihua-recommend {
-          grid-column: start / end;
-          display: grid;
-          grid-gap: var(--grid-gap);
-          grid-template-columns: [start] repeat(3, 1fr) [end];
           margin-bottom: 20px;
-          & > :matches(.title, .none) {
-            grid-column: start / end;
+          & > .list {
+            width: 360px;
+            margin-right: 60px;
+            &:nth-child(3n) {
+              margin-right: 0;
+            }
           }
         }
         & > .info {
-          grid-column: start / end;
-          display: grid;
-          grid-gap: var(--grid-gap);
-          grid-template-columns: [start] repeat(3, 1fr) [end];
-          grid-template-areas:
-            "house-info  house-info  recom-info"
-            "house-cards house-cards recom-card";
-          & > .house-info {
-            grid-area: house-info;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            & > .tool {
+          display: flex;
+          justify-content: space-between;
+          & > .left {
+            width: 780px;
+            & > .house-info {
               display: flex;
-              align-items: center;
-              & .sort {
-                cursor: pointer;
-                margin-left: 10px;
-                & .icon {
-                  font-size: 16px;
-                  vertical-align: bottom;
-                  transform: scale(1);
-                  transition: 0.2s;
-                  &:matches(.sort-enter, .sort-leave-to) {
-                    transform: scale(0);
-                    transform-origin: center;
-                  }
-                }
-              }
-            }
-          }
-          & > .house-cards {
-            grid-area: house-cards;
-            display: grid;
-            grid-gap: var(--grid-gap);
-            grid-columns: 1fr;
-            & > .card {
-              & .header {
-                width: 359px;
-                height: var(--house-img-height);
-                overflow: hidden;
-              }
-              & .body {
-                padding: var(--house-padding);
-                & > .title {
-                  color: var(--color-yellow);
-                  font-size: 20px;
-                  font-weight: bold;
-                }
-                & > .info {
-                  padding-top: 12px;
-                  & > :first-child {
-                    position: relative;
-                    display: flex;
-                    flex-wrap: wrap;
-                    width: 100%;
-                    padding-bottom: 20px;
-                    padding-left: 2px;
-                    &::after {
-                      content: "";
-                      position: absolute;
-                      bottom: 0;
-                      left: 0;
-                      width: 28px;
-                      height: 2px;
-                      background-color: var(--color-yellow);
-                    }
-                    & > .key {
-                      color: var(--font-color-light-4);
-                      font-size: 14px;
-                      line-height: 25px;
-                      width: 50%;
-                      & > .value {
-                        color: var(--font-color-light-1);
-                      }
-                    }
-                  }
-                  & > :last-child {
+              align-items: flex-end;
+              justify-content: space-between;
+              margin-bottom: 40px;
+              & > .tool {
+                display: flex;
+                align-items: center;
+                & .sort {
+                  cursor: pointer;
+                  margin-left: 10px;
+                  & .icon {
                     font-size: 16px;
-                    position: relative;
-                    margin-top: 10px;
-                    & > .rmb {
-                      line-height: 28px;
-                      & > .num {
-                        color: var(--color-yellow);
-                        font-size: 24px;
-                        font-weight: bold;
-                      }
-                    }
-                    & > .aud {
-                      color: var(--font-color-light-4);
-                      & > .num {
-                        font-weight: bold;
-                      }
-                    }
-                    & > .btn {
-                      --spacing: 6px;
-                      font-size: 18px;
-                      text-indent: var(--spacing); /* 使文字保持居中 */
-                      letter-spacing: var(--spacing);
-                      position: absolute;
-                      top: 0;
-                      bottom: 0;
-                      right: 0;
-                      width: 85px;
-                      height: 35px;
-                      margin: auto 0;
-                      border-radius: 0;
+                    vertical-align: bottom;
+                    transform: scale(1);
+                    transition: 0.2s;
+                    &:matches(.sort-enter, .sort-leave-to) {
+                      transform: scale(0);
+                      transform-origin: center;
                     }
                   }
                 }
               }
-              &:hover img {
-                transform: var(--house-img-transform);
+            }
+            & > .house-cards {
+              & > .card {
+                margin-bottom: 40px;
+                & .header {
+                  width: 359px;
+                  height: var(--house-img-height);
+                  overflow: hidden;
+                }
+                & .body {
+                  padding: var(--house-padding);
+                  & > .title {
+                    color: var(--color-yellow);
+                    font-size: 20px;
+                    font-weight: bold;
+                  }
+                  & > .info {
+                    padding-top: 12px;
+                    & > :first-child {
+                      position: relative;
+                      display: flex;
+                      flex-wrap: wrap;
+                      width: 100%;
+                      padding-bottom: 20px;
+                      padding-left: 2px;
+                      &::after {
+                        content: "";
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        width: 28px;
+                        height: 2px;
+                        background-color: var(--color-yellow);
+                      }
+                      & > .key {
+                        color: var(--font-color-light-4);
+                        font-size: 14px;
+                        line-height: 25px;
+                        width: 50%;
+                        & > .value {
+                          color: var(--font-color-light-1);
+                        }
+                      }
+                    }
+                    & > :last-child {
+                      font-size: 16px;
+                      position: relative;
+                      margin-top: 10px;
+                      & > .rmb {
+                        line-height: 28px;
+                        & > .num {
+                          color: var(--color-yellow);
+                          font-size: 24px;
+                          font-weight: bold;
+                        }
+                      }
+                      & > .aud {
+                        color: var(--font-color-light-4);
+                        & > .num {
+                          font-weight: bold;
+                        }
+                      }
+                      & > .btn {
+                        --spacing: 6px;
+                        font-size: 18px;
+                        text-indent: var(--spacing); /* 使文字保持居中 */
+                        letter-spacing: var(--spacing);
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        right: 0;
+                        width: 85px;
+                        height: 35px;
+                        margin: auto 0;
+                        border-radius: 0;
+                      }
+                    }
+                  }
+                }
+                &:hover img {
+                  transform: var(--house-img-transform);
+                }
+              }
+              & > .pagination {
+                text-align: right;
               }
             }
-            & > .pagination {
-              text-align: right;
+          }
+          & > .right {
+            width: 360px;
+            & > .recommend-info {
+              margin-bottom: 31px;
             }
-          }
-          & > .recommend-info {
-            grid-area: recom-info;
-          }
-          & > .recommend-card {
-            grid-area: recom-card;
-            align-items: start;
-            & > .card {
-              padding: 15px 10px 30px 22px;
-              &.title {
-                width: 340px;
+            & > .recommend-card {
+              align-items: start;
+              & > .card {
+                padding: 15px 10px 30px 22px;
+                &.title {
+                  width: 340px;
+                }
               }
             }
           }

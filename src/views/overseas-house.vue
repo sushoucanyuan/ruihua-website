@@ -14,7 +14,7 @@
           <div class="value">
             <div>总价：
               <span class="number">{{house.rmb}}</span>
-              万起（人名币）&nbsp;AUD：83.3万起（澳币）
+              万起（人名币）&nbsp;AUD：{{house.aud}}万起（澳币）
             </div>
             <div class="rate">
               <m-icon class="icon" name="qian"></m-icon>首付{{house.rate}}</div>
@@ -66,25 +66,25 @@
       <div class="intro">{{house.intro || '暂无说明~'}}</div>
       <m-title class="title" level="2" en="surrounding facilities" cn="周边设施" line></m-title>
       <div class="resource">
-        <div v-if="house.enduresource">
+        <div v-if="house.eduresource">
           <div>教育资源</div>
-          <div>{{house.enduresource}}</div>
+          <div v-html="br(house.eduresource)"></div>
         </div>
         <div v-if="house.shopresource">
           <div>商业购物</div>
-          <div>{{house.shopresource}}</div>
+          <div v-html="br(house.shopresource)"></div>
         </div>
         <div v-if="house.healthresource">
           <div>休闲健康</div>
-          <div>{{house.healthresource}}</div>
+          <div v-html="br(house.healthresource)"></div>
         </div>
         <div v-if="house.trafficresource">
           <div>交通出行</div>
-          <div>{{house.trafficresource}}</div>
+          <div v-html="br(house.trafficresource)"></div>
         </div>
         <div v-if="house.otherresource">
           <div>其它</div>
-          <div>{{house.otherresource}}</div>
+          <div v-html="br(house.otherresource)"></div>
         </div>
       </div>
       <m-title class="title" level="2" en="property support" cn="物业配套" line></m-title>
@@ -93,7 +93,7 @@
       <div class="show" v-html="house.layoutshow || '暂无说明~'"></div>
       <m-title class="title" level="2" en="recommend" cn="瑞华推荐" line></m-title>
       <div class="recommend">
-        <m-recommend v-for="item in recommend" :key="item.planid" :item="item"></m-recommend>
+        <m-recommend class="card" v-for="item in recommend" :key="item.planid" :item="item"></m-recommend>
       </div>
       <m-form :visible.sync="visible" type="house" title="欢迎预约购房" :info="house.planname" @post="post"></m-form>
     </div>
@@ -117,6 +117,9 @@
       }
     },
     methods: {
+      br: function (str) {
+        return str.replace(/\r\n/g, '<br/>')
+      },
       buy: function () {
         this.visible = true
       },
@@ -325,10 +328,15 @@
         }
       }
       & > .recommend {
-        display: grid;
-        grid-gap: var(--grid-gap);
-        grid-template-columns: [start] repeat(3, 1fr) [end];
-        padding-top: 40px;
+        display: flex;
+        flex-flow: row;
+        padding-top: 40px;        
+        & > .card {
+          margin-right: 60px;
+          &:nth-child(3n) {
+            margin-right: 0;
+          }
+        }
       }
     }
   }

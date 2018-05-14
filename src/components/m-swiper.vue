@@ -37,7 +37,7 @@
             el: '.swiper-pagination',
             clickable: true,
             renderBullet(index, className) {
-              return `<span class="${className} swiper-pagination-bullet-custom banner-pagination"></span>`
+              return `<span class="${className} swiper-pagination-bullet-custom banner-pagination a"></span>`
             }
           },
           navigation: {
@@ -98,7 +98,7 @@
       & .banner-button-next {
         right: 10%;
       }
-      & .banner-pagination {
+      & .banner-pagination.a {
         --transition-time: 0.3s;
         opacity: 1;
         position: relative;

@@ -47,8 +47,8 @@
     & > .imgs {
       display: flex;
       justify-content: space-around;
-      justify-content: space-evenly;
       margin-top: 110px;
+      padding: 0 30px;
       & > div {
         display: flex;
         flex-direction: column;
